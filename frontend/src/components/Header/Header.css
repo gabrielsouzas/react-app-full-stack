@@ -1,0 +1,31 @@
+.header {
+    background-color: #3e3f41;
+    position: fixed;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    z-index: 1;
+    padding-right: 20px;
+}
+
+.header-title {
+    background-color: #212529;
+    padding: 20px;
+    color: #fff;
+    width: 220px;
+    min-width: 220px;
+}
+
+.header-container {
+    width: 100%;
+}
+
+.header-container input {
+    color: #fff;
+    background-color: #4e4f5291;
+    border: none;
+    padding: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 100%;
+}

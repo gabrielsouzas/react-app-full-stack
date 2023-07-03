@@ -7,11 +7,11 @@ const getAll = async () => {
 
 const createCliente = async (cliente) => {
 
-    const { nome } = cliente;
+    const { nome, nomeabreviado, cpf, telefone, ativo } = cliente;
 
     // Insere os dados do cliente no banco
-    const query = 'INSERT INTO clientes(nome) VALUES (?)';
-    const [createdCliente] = await connection.execute(query, [nome]);
+    const query = 'INSERT INTO clientes(nome) VALUES (?,?,?,?,?)';
+    const [createdCliente] = await connection.execute(query, [nome, nomeabreviado, cpf, telefone, ativo]);
 
     // Retorna apenas o ID inserido
     return {insertId: createdCliente.insertId};
@@ -19,9 +19,9 @@ const createCliente = async (cliente) => {
 
 // Método que atualiza um cliente do bd
 const updateCliente = async (idcliente, cliente) => {
-    const { nome } = cliente;
+    const { nome, nomeabreviado, cpf, telefone, ativo } = cliente;
 
-    const [updatedCliente] = await connection.execute('UPDATE clientes SET nome = ? WHERE idcliente = ?', [nome, idcliente]);
+    const [updatedCliente] = await connection.execute('UPDATE clientes SET nome = ?, nomeabreviado = ?, cpf = ?, telefone = ?, ativo = ? WHERE idcliente = ?', [nome, nomeabreviado, cpf, telefone, ativo, idcliente]);
     return updatedCliente;
 };
 

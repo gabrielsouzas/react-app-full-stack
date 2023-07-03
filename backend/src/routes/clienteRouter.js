@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 const clienteController = require('../controllers/clienteController');
-const clienteMiddleware = require('./middlewares/clienteMiddleware');
+const clienteMiddleware = require('../middlewares/clienteMiddleware');
 
 router.get('/clientes', clienteController.getAll);
 

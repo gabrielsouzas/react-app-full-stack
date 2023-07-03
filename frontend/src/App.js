@@ -19,13 +19,17 @@ function App() {
         typeof clientes !== "undefined" && clientes.map((value) => {
           return (
             <div>
-              <h1>{value.idclientes}</h1>
+              <h1>{value.idcliente}</h1>
               <p>{value.nome}</p>
+              <p>{value.nomeabreviado}</p>
+              <p>{value.cpf}</p>
+              <p>{value.telefone}</p>
+              <p>{value.ativo}</p>
             </div>
           )
         })
       }
-      
+      <button onClick={() => clienteService.insertCliente({nome: "Kalvin"})}>Cadastrar</button>
     </div>
   );
 }

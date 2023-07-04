@@ -1,10 +1,10 @@
 .sidebar {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     background-color: #212529;
     width: 220px;
-    height: 100vh;
-    border: 1px solid rgb(92, 92, 92);
+    border-top: 1px solid #52575D;
     padding-top: 15px;
 }
 
@@ -16,11 +16,41 @@
     align-items: center;
     justify-content: flex-start;
     gap: 5px;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 500;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.sidebar a:hover {
+    color: #2470DC;
 }
 
 #sidebar_id_clientes {
     color: #2470DC;
 }
+
+.sidebar-reports h2 {
+    padding-left: 15px;
+    padding-right: 30px;
+    font-size: 15px;
+    color: #52575D;
+    text-transform: uppercase;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.sidebar-entities, .sidebar-reports, .sidebar-utilities  {
+    padding-bottom: 30px;
+    border-right: 1px solid #52575D;
+    border-left: 1px solid #52575D;
+}
+
+.sidebar-reports {
+    
+}
+
+.sidebar-utilities {
+    padding-top: 15px;
+}
+

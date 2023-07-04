@@ -15,21 +15,43 @@ function Cliente() {
   
   return (
     <div>
-      {
-        typeof clientes !== "undefined" && clientes.map((value) => {
-          return (
-            <div>
-              <h1>{value.idcliente}</h1>
-              <p>{value.nome}</p>
-              <p>{value.nomeabreviado}</p>
-              <p>{value.cpf}</p>
-              <p>{value.telefone}</p>
-              <p>{value.ativo}</p>
+      <h1>Clientes</h1>
+            <div className="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Código</th>
+                    <th>Nome</th>
+                    <th>Nome Abv.</th>
+                    <th>CPF</th>
+                    <th>Telefone</th>
+                    <th>Ativo</th>
+                    <th>Manutenção</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {
+                  typeof clientes !== "undefined" && clientes.map((value) => {
+                    return (
+                      <tr>
+                        <td>{value.idcliente}</td>
+                        <td>{value.nome}</td>
+                        <td>{value.nomeabreviado}</td>
+                        <td>{value.cpf}</td>
+                        <td>{value.telefone}</td>
+                        <td>{value.ativo}</td>
+                        <td>
+                          <button>Alterar</button>
+                          <button>Excluir</button>
+                        </td>
+                      </tr>
+                    )
+                      })
+                    }
+                </tbody>
+              </table>
             </div>
-          )
-        })
-      }
-      <button onClick={() => clienteService.insertCliente({nome: "Kalvin"})}>Cadastrar</button>
+      <button onClick={() => clienteService.insertCliente({nome: "Kalvin"})}>Novo</button>
     </div>
   );
 }

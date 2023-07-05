@@ -1,6 +1,23 @@
 /*#2C3845 #202932*/
-h1 {
+.cliente {
+    width: 100%;
+}
+.cliente-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     padding: 15px;
+}
+.cliente-title h1 {
+    color: #1f2933;
+}
+.cliente-title button {
+    padding: 10px 40px;
+    background-color: #3c5f5f;
+}
+.cliente-title button:hover {
+    background-color: #628b8b;
 }
 .table-container {
     padding: 15px;
@@ -9,15 +26,20 @@ table {
     width: 100%;
     border-collapse: collapse;
     color: #fff;
+    overflow: scroll;
 }
 
 thead {
     background-color: #202932;
 }
+thead tr {
+    text-transform: uppercase;
+}
 
 th, td {
     border: 1px solid #202932;
     padding: 8px;
+    text-align: center;
 }
 
 tr:nth-child(even) {
@@ -39,9 +61,11 @@ button {
     padding: 8px;
     margin-left: 15px;
     background-color: #4B908F;
+    border: none;
     cursor: pointer;
+    box-shadow: 0px 8px 12px rgba(48, 94, 94, 0.4);
 }
 
 button:hover {
     background-color: #2b5858;
-}
+  }

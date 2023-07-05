@@ -14,8 +14,11 @@ function Cliente() {
   });
   
   return (
-    <div>
-      <h1>Clientes</h1>
+    <div className="cliente">
+      <div className="cliente-title">
+        <h1>Clientes</h1>
+        <button onClick={() => clienteService.insertCliente({nome: "Kalvin"})}>Novo</button>
+      </div>
             <div className="table-container">
               <table>
                 <thead>
@@ -51,7 +54,7 @@ function Cliente() {
                 </tbody>
               </table>
             </div>
-      <button onClick={() => clienteService.insertCliente({nome: "Kalvin"})}>Novo</button>
+      
     </div>
   );
 }

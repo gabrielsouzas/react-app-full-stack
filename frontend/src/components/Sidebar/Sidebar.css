@@ -4,6 +4,7 @@
     justify-content: space-between;
     background-color: #212529;
     width: 220px;
+    min-width: 220px;
     border-top: 1px solid #52575D;
     padding-top: 15px;
 }

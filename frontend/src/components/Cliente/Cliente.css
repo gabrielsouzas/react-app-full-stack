@@ -20,10 +20,10 @@
     background-color: #628b8b;
 }
 .table-container {
-    padding: 15px;
+    padding: 5px 15px;
 }
 table {
-    width: 100%;
+    width: 100%;;
     border-collapse: collapse;
     color: #fff;
     overflow: scroll;
@@ -69,3 +69,36 @@ button {
 button:hover {
     background-color: #2b5858;
   }
+
+/* Paginação tabela*/
+
+nav {
+    padding: 0 15px;
+}
+
+nav ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    list-style: none;
+    background-color: #2C3845;
+    border-radius: 5px;
+    border: 1px solid #202932;
+}
+
+nav li {
+    padding: 8px 0;
+}
+
+nav a {
+    background-color: #65707D;
+    border-radius: 5px;
+    padding: 3px 10px;
+    color: #fff;
+}
+
+nav a:hover {
+    background-color: #3c434b;
+}

@@ -4,6 +4,12 @@ const fetchClientes = async () => {
     return data;
 }
 
+const fetchClienteById = async (idcliente) => {
+    const response = await fetch(`http://localhost:3333/cliente/${idcliente}`);
+    const data = await response.json();
+    return data;
+}
+
 const insertCliente = async (cliente) => {
 
     await fetch('http://localhost:3333/clientes', {
@@ -31,6 +37,7 @@ const deleteCliente = async (idcliente) => {
 
 module.exports = {
     fetchClientes,
+    fetchClienteById,
     insertCliente,
     updateCliente,
     deleteCliente,

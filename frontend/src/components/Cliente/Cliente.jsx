@@ -10,6 +10,7 @@ function Cliente() {
 
   const [clientes, setClientes] = useState();
   const [isOpen, setIsOpen] = useState(false);
+  const [idCliente, setIdCliente] = useState();
 
   useEffect(() => {
     clienteService.fetchClientes().then((response) => {
@@ -20,6 +21,13 @@ function Cliente() {
   const handleOpenModal = () => {
     setIsOpen(true);
   };
+
+  const handleUpdateCliente = (id) => {
+    setIdCliente(id)
+    handleOpenModal()
+  }
+
+
   
   return (
     <>
@@ -28,6 +36,7 @@ function Cliente() {
         <ClienteModal
           isOpen={isOpen} 
           setIsOpen={setIsOpen}
+          idCliente={idCliente}
     />
       )
     }
@@ -62,7 +71,9 @@ function Cliente() {
                         <td>{formatPhoneNumber(value.telefone)}</td>
                         <td>{value.ativo}</td>
                         <td>
-                          <button>Alterar</button>
+                          <button onClick={() => {
+                            setIdCliente(value.idcliente)
+                          }}>Alterar</button>
                           <button onClick={() => clienteService.deleteCliente(value.idcliente)}>Excluir</button>
                         </td>
                       </tr>

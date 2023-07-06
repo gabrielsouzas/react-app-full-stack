@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import clienteService from "../../services/clienteService"
 
 import './ClienteModal.css';
 
@@ -13,6 +14,14 @@ function ClienteModal(props) {
   });
 
   const [cpf, setCPF] = useState("");
+  const [cliente, setCliente] = useState({
+    idcliente: "",
+    nome: "",
+    nomeabreviado: "",
+    cpf: "",
+    telefone: "",
+    ativo: "Não",
+  });
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -61,6 +70,13 @@ function ClienteModal(props) {
     return formattedCPF;
   };
 
+  useEffect(() => {
+    props.idCliente && 
+      clienteService.fetchClienteById(props.idCliente).then((response) => {
+      setCliente(response);
+      });
+  });
+
   return (
     <div>
 
@@ -80,7 +96,7 @@ function ClienteModal(props) {
                   type="text"
                   id="idcliente"
                   name="idcliente"
-                  value={formValues.idcliente}
+                  value={cliente.idcliente}
                   onChange={handleChange}
                   disabled={true}
                 />
@@ -91,7 +107,7 @@ function ClienteModal(props) {
                   type="text"
                   id="nome"
                   name="nome"
-                  value={formValues.nome}
+                  value={cliente.nome}
                   onChange={handleChange}
                   required
                 />
@@ -102,7 +118,7 @@ function ClienteModal(props) {
                   type="text"
                   id="nomeAbreviado"
                   name="nomeAbreviado"
-                  value={formValues.nomeAbreviado}
+                  value={cliente.nomeabreviado}
                   onChange={handleChange}
                   required
                 />
@@ -126,7 +142,7 @@ function ClienteModal(props) {
                   type="text"
                   id="telefone"
                   name="telefone"
-                  value={formValues.telefone}
+                  value={cliente.telefone}
                   onChange={handleChange}
                   required
                 />
@@ -137,7 +153,7 @@ function ClienteModal(props) {
                   <select
                     id="ativo"
                     name="ativo"
-                    value={formValues.ativo}
+                    value={cliente.ativo}
                     onChange={handleChange}>
                       <option value="SIM">Sim</option>
                       <option value="NAO">Não</option>

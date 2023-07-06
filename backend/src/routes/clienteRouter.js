@@ -7,6 +7,8 @@ const clienteMiddleware = require('../middlewares/clienteMiddleware');
 
 router.get('/clientes', clienteController.getAll);
 
+router.get('/cliente/:idcliente', clienteController.getById);
+
 router.post('/clientes', clienteMiddleware.validateFieldNome, clienteController.createCliente);
 
 router.put('/clientes/:idcliente', 

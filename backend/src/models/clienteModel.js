@@ -5,6 +5,12 @@ const getAll = async () => {
     return clientes;
 };
 
+const getById = async (idcliente) => {
+    const query = 'SELECT * FROM clientes WHERE idcliente = ?';
+    const [cliente] = await connection.execute(query, [idcliente]);
+    return cliente;
+};
+
 const createCliente = async (cliente) => {
 
     const { nome, nomeabreviado, cpf, telefone, ativo } = cliente;
@@ -34,6 +40,7 @@ const deleteCliente = async (idcliente) => {
 
 module.exports = {
     getAll,
+    getById,
     createCliente,
     updateCliente,
     deleteCliente,

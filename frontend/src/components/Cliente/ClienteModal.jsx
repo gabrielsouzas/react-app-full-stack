@@ -12,6 +12,8 @@ function ClienteModal(props) {
     ativo: "",
   });
 
+  const [cpf, setCPF] = useState("");
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     const newValue = type === "checkbox" ? checked : value;
@@ -33,15 +35,44 @@ function ClienteModal(props) {
     console.log(formValues);
   };
 
+  const handleCPFChange = (e) => {
+    const { value } = e.target;
+
+    // Remove qualquer caractere que não seja dígito
+    const cleanedValue = value.replace(/\D/g, "");
+
+    // Aplica a formatação do CPF
+    const formattedValue = formatCPF(cleanedValue);
+
+    setCPF(formattedValue);
+  };
+
+  const formatCPF = (value) => {
+    // Remove a formatação atual do CPF
+    const unformattedValue = value.replace(/[.-]/g, "");
+
+    // Aplica a nova formatação do CPF
+    const parts = unformattedValue.match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})/);
+    console.log(parts)
+    const formattedCPF = !parts[2]
+      ? parts[1]
+      : `${parts[1]}.${parts[2]}${parts[3] ? `.${parts[3]}` : ""}${parts[4] ? `-${parts[4]}` : ""}`;
+
+    return formattedCPF;
+  };
+
   return (
     <div>
 
       {props.isOpen && (
         <div className="modal">
           <div className="modal-content">
-            <span className="close" onClick={handleCloseModal}>
-              &times;
-            </span>
+            <div className="modal-title">
+              <h3>Cadastrar/Alterar Cliente</h3>
+              <span className="close" onClick={handleCloseModal}>
+                &times;
+              </span>
+            </div>
             <form onSubmit={handleSubmit}>
               <div>
                 <label htmlFor="idcliente">Código:</label>
@@ -51,7 +82,7 @@ function ClienteModal(props) {
                   name="idcliente"
                   value={formValues.idcliente}
                   onChange={handleChange}
-                  required
+                  disabled={true}
                 />
               </div>
               <div>
@@ -82,8 +113,10 @@ function ClienteModal(props) {
                   type="text"
                   id="cpf"
                   name="cpf"
-                  value={formValues.cpf}
-                  onChange={handleChange}
+                  value={cpf}
+                  onChange={handleCPFChange}
+                  placeholder="Digite o CPF"
+                  maxLength={14}
                   required
                 />
               </div>
@@ -100,15 +133,21 @@ function ClienteModal(props) {
               </div>
               <div>
                 <label htmlFor="ativo">Ativo:</label>
-                <input
-                  type="checkbox"
-                  id="ativo"
-                  name="ativo"
-                  checked={formValues.ativo}
-                  onChange={handleChange}
-                />
+                <div>
+                  <select
+                    id="ativo"
+                    name="ativo"
+                    value={formValues.ativo}
+                    onChange={handleChange}>
+                      <option value="SIM">Sim</option>
+                      <option value="NAO">Não</option>
+                  </select>
+                </div>
               </div>
-              <button type="submit">Enviar</button>
+              <div className="modal-button-container">
+                <button type="submit">Salvar</button>
+                <button type="button">Cancelar</button>
+              </div>
             </form>
           </div>
         </div>

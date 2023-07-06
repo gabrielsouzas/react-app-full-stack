@@ -5,6 +5,12 @@ const getAll = async (request, response) => {
     return response.status(200).json(cliente);
 };
 
+const getById = async (request, response) => {
+    const { idcliente } = request.params;
+    const cliente = await clienteModel.getById(idcliente);
+    return response.status(200).json(cliente);
+};
+
 const createCliente = async (request, response) => {
     // Executa o método createCliente do Model passando o body
     const createdCliente = await clienteModel.createCliente(request.body);
@@ -37,6 +43,7 @@ const deleteCliente = async (request, response) => {
 
 module.exports = {
     getAll,
+    getById,
     createCliente,
     updateCliente,
     deleteCliente,

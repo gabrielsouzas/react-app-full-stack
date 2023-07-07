@@ -1,37 +1,29 @@
 import React, { useEffect, useState } from "react";
 import clienteService from "../../services/clienteService"
 
+import { formatCPFInput, formatPhoneNumberInput } from "../../utils/format";
+
 import './ClienteModal.css';
 
 function ClienteModal(props) {
-  /*const [formValues, setFormValues] = useState({
-    idcliente: "",
-    nome: "",
-    nomeAbreviado: "",
-    cpf: "",
-    telefone: "",
-    ativo: "",
-  });*/
 
-  const [idCliente, setIdCliente] = useState();
-  const [nome, setNome] = useState();
-  const [nomeAbreviado, setNomeAbreviado] = useState();
+  const [idCliente, setIdCliente] = useState(0);
+  const [nome, setNome] = useState("");
+  const [nomeAbreviado, setNomeAbreviado] = useState("");
   const [cpf, setCPF] = useState("");
-  const [telefone, setTelefone] = useState();
-  const [ativo, setAtivo] = useState();
+  const [telefone, setTelefone] = useState("");
+  const [ativo, setAtivo] = useState("Não");
   
+  //const [cliente, setCliente] = useState([]);
 
-  const [cliente, setCliente] = useState([]);
-
-  /*const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    const newValue = type === "checkbox" ? checked : value;
-
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      [name]: newValue,
-    }));
-  };*/
+  const cleanCliente = () => {
+    setIdCliente("");
+    setNome("");
+    setNomeAbreviado("");
+    setCPF("");
+    setTelefone("");
+    setAtivo("Não");
+  }
 
   const handleCloseModal = () => {
     props.setIsOpen(false);
@@ -40,39 +32,30 @@ function ClienteModal(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    console.log("teste")
     // Aqui serão enviados os dados para o backend
     //console.log(formValues);
   };
 
   const handleCPFChange = (e) => {
     const { value } = e.target;
-
     // Remove qualquer caractere que não seja dígito
     const cleanedValue = value.replace(/\D/g, "");
-
     // Aplica a formatação do CPF
-    const formattedValue = formatCPF(cleanedValue);
-
+    const formattedValue =  formatCPFInput(cleanedValue);
     setCPF(formattedValue);
   };
 
-  const formatCPF = (value) => {
-    // Remove a formatação atual do CPF
-    const unformattedValue = value ? value.replace(/[.-]/g, "") : "";
-
-    // Aplica a nova formatação do CPF
-    const parts = unformattedValue.match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})/);
-    
-    const formattedCPF = !parts[2]
-      ? parts[1]
-      : `${parts[1]}.${parts[2]}${parts[3] ? `.${parts[3]}` : ""}${parts[4] ? `-${parts[4]}` : ""}`;
-
-    return formattedCPF;
+  const handleTelefoneChange = (e) => {
+    const { value } = e.target;
+    const cleanedValue = value.replace(/\D/g, "");
+    const formattedValue =  formatPhoneNumberInput(cleanedValue);
+    setTelefone(formattedValue);
   };
 
   useEffect(() => {
-      props.idCliente && 
-      clienteService.fetchClienteById(props.idCliente).then((response) => {
+      props.idCliente
+      ? clienteService.fetchClienteById(props.idCliente).then((response) => {
         const [ data ] = response;
         const { idcliente, nome, nomeabreviado, cpf, telefone, ativo } = data;
         //setCliente(data);
@@ -82,16 +65,17 @@ function ClienteModal(props) {
         setCPF(cpf);
         setTelefone(telefone);
         setAtivo(ativo);
-      });
+      })
+      : cleanCliente();
   }, [props.idCliente]);
 
-  const handleChange = (value) => {
-    /* Pega os valores anteriores e adiciona os novos */
-    /*setCliente(prevValue=>({
+  /*const handleChange = (value) => {
+    // Pega os valores anteriores e adiciona os novos
+    setCliente(prevValue=>({
       ...prevValue,
       [value.target.name]: value.target.value,
-    }));*/
-  }
+    }));
+  }*/
 
   return (
     <div>
@@ -111,8 +95,9 @@ function ClienteModal(props) {
                   type="text"
                   id="idcliente"
                   name="idcliente"
+                  placeholder="ID (Auto-incremento)"
                   value={idCliente}
-                  onChange={handleChange}
+                  onChange={(e) => setIdCliente(e.target.value)}
                   disabled={true}
                 />
               </div>
@@ -122,7 +107,9 @@ function ClienteModal(props) {
                   type="text"
                   id="nome"
                   name="nome"
+                  placeholder="Digite o nome completo"
                   value={nome}
+                  onChange={(e) => setNome(e.target.value)}
                   required
                 />
               </div>
@@ -132,8 +119,9 @@ function ClienteModal(props) {
                   type="text"
                   id="nomeAbreviado"
                   name="nomeAbreviado"
+                  placeholder="Digite o primeiro nome"
                   value={nomeAbreviado}
-                  onChange={handleChange}
+                  onChange={(e) => setNomeAbreviado(e.target.value)}
                   required
                 />
               </div>
@@ -143,7 +131,7 @@ function ClienteModal(props) {
                   type="text"
                   id="cpf"
                   name="cpf"
-                  value={formatCPF(cpf)}
+                  value={formatCPFInput(cpf)}
                   onChange={handleCPFChange}
                   placeholder="Digite o CPF"
                   maxLength={14}
@@ -156,8 +144,9 @@ function ClienteModal(props) {
                   type="text"
                   id="telefone"
                   name="telefone"
-                  value={telefone}
-                  onChange={handleChange}
+                  placeholder="Digite o telefone (Apenas números)"
+                  value={formatPhoneNumberInput(telefone)}
+                  onChange={handleTelefoneChange}
                   required
                 />
               </div>
@@ -168,7 +157,7 @@ function ClienteModal(props) {
                     id="ativo"
                     name="ativo"
                     value={ativo}
-                    onChange={handleChange}>
+                    onChange={(e) => setAtivo(e.target.value)}>
                       <option value="SIM">Sim</option>
                       <option value="NAO">Não</option>
                   </select>

@@ -28,12 +28,14 @@ function Cliente() {
     handleOpenModal();
   }
 
-  
+  const handleClickNovo = () => {
+    setIdCliente(null)
+    handleOpenModal();
+  }
   
   return (
     <>
       <ClienteModal
-        
         isOpen={isOpen} 
         setIsOpen={setIsOpen}
         idCliente={idCliente}
@@ -42,7 +44,7 @@ function Cliente() {
       <div className="cliente-title">
         <h1>Clientes</h1>
         {/*<button onClick={() => clienteService.insertCliente({nome: "Kalvin"})}>Novo</button>*/}
-        <button onClick={handleOpenModal}>Novo</button>
+        <button onClick={handleClickNovo}>Novo</button>
       </div>
             <div className="table-container">
               <table>

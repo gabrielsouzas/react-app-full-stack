@@ -8,7 +8,7 @@ const clienteService = require('../../services/clienteService');
 
 function Cliente() {
 
-  const [clientes, setClientes] = useState();
+  const [clientes, setClientes] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [idCliente, setIdCliente] = useState();
 
@@ -16,30 +16,28 @@ function Cliente() {
     clienteService.fetchClientes().then((response) => {
       setClientes(response);
     });
-  });
+  }, []);
 
   const handleOpenModal = () => {
     setIsOpen(true);
   };
 
-  const handleUpdateCliente = (id) => {
-    setIdCliente(id)
-    handleOpenModal()
+  const handleClickBtnAlterar = (id) => {
+    setIdCliente((prevValue) => prevValue = id);
+
+    handleOpenModal();
   }
 
-
+  
   
   return (
     <>
-    {
-      isOpen && (
-        <ClienteModal
-          isOpen={isOpen} 
-          setIsOpen={setIsOpen}
-          idCliente={idCliente}
-    />
-      )
-    }
+      <ClienteModal
+        
+        isOpen={isOpen} 
+        setIsOpen={setIsOpen}
+        idCliente={idCliente}
+      />
     <div className="cliente">
       <div className="cliente-title">
         <h1>Clientes</h1>
@@ -71,10 +69,8 @@ function Cliente() {
                         <td>{formatPhoneNumber(value.telefone)}</td>
                         <td>{value.ativo}</td>
                         <td>
-                          <button onClick={() => {
-                            setIdCliente(value.idcliente)
-                          }}>Alterar</button>
-                          <button onClick={() => clienteService.deleteCliente(value.idcliente)}>Excluir</button>
+                          <button type="button" onClick={() => {handleClickBtnAlterar(value.idcliente)}}>Alterar</button>
+                          <button type="button" onClick={() => clienteService.deleteCliente(value.idcliente)}>Excluir</button>
                         </td>
                       </tr>
                     )

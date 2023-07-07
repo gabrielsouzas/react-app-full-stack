@@ -4,26 +4,26 @@ import clienteService from "../../services/clienteService"
 import './ClienteModal.css';
 
 function ClienteModal(props) {
-  const [formValues, setFormValues] = useState({
+  /*const [formValues, setFormValues] = useState({
     idcliente: "",
     nome: "",
     nomeAbreviado: "",
     cpf: "",
     telefone: "",
     ativo: "",
-  });
+  });*/
 
+  const [idCliente, setIdCliente] = useState();
+  const [nome, setNome] = useState();
+  const [nomeAbreviado, setNomeAbreviado] = useState();
   const [cpf, setCPF] = useState("");
-  const [cliente, setCliente] = useState({
-    idcliente: "",
-    nome: "",
-    nomeabreviado: "",
-    cpf: "",
-    telefone: "",
-    ativo: "Não",
-  });
+  const [telefone, setTelefone] = useState();
+  const [ativo, setAtivo] = useState();
+  
 
-  const handleChange = (e) => {
+  const [cliente, setCliente] = useState([]);
+
+  /*const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     const newValue = type === "checkbox" ? checked : value;
 
@@ -31,7 +31,7 @@ function ClienteModal(props) {
       ...prevValues,
       [name]: newValue,
     }));
-  };
+  };*/
 
   const handleCloseModal = () => {
     props.setIsOpen(false);
@@ -41,7 +41,7 @@ function ClienteModal(props) {
     e.preventDefault();
 
     // Aqui serão enviados os dados para o backend
-    console.log(formValues);
+    //console.log(formValues);
   };
 
   const handleCPFChange = (e) => {
@@ -58,11 +58,11 @@ function ClienteModal(props) {
 
   const formatCPF = (value) => {
     // Remove a formatação atual do CPF
-    const unformattedValue = value.replace(/[.-]/g, "");
+    const unformattedValue = value ? value.replace(/[.-]/g, "") : "";
 
     // Aplica a nova formatação do CPF
     const parts = unformattedValue.match(/(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})/);
-    console.log(parts)
+    
     const formattedCPF = !parts[2]
       ? parts[1]
       : `${parts[1]}.${parts[2]}${parts[3] ? `.${parts[3]}` : ""}${parts[4] ? `-${parts[4]}` : ""}`;
@@ -71,15 +71,30 @@ function ClienteModal(props) {
   };
 
   useEffect(() => {
-    props.idCliente && 
+      props.idCliente && 
       clienteService.fetchClienteById(props.idCliente).then((response) => {
-      setCliente(response);
+        const [ data ] = response;
+        const { idcliente, nome, nomeabreviado, cpf, telefone, ativo } = data;
+        //setCliente(data);
+        setIdCliente(idcliente);
+        setNome(nome);
+        setNomeAbreviado(nomeabreviado);
+        setCPF(cpf);
+        setTelefone(telefone);
+        setAtivo(ativo);
       });
-  });
+  }, [props.idCliente]);
+
+  const handleChange = (value) => {
+    /* Pega os valores anteriores e adiciona os novos */
+    /*setCliente(prevValue=>({
+      ...prevValue,
+      [value.target.name]: value.target.value,
+    }));*/
+  }
 
   return (
     <div>
-
       {props.isOpen && (
         <div className="modal">
           <div className="modal-content">
@@ -96,7 +111,7 @@ function ClienteModal(props) {
                   type="text"
                   id="idcliente"
                   name="idcliente"
-                  value={cliente.idcliente}
+                  value={idCliente}
                   onChange={handleChange}
                   disabled={true}
                 />
@@ -107,8 +122,7 @@ function ClienteModal(props) {
                   type="text"
                   id="nome"
                   name="nome"
-                  value={cliente.nome}
-                  onChange={handleChange}
+                  value={nome}
                   required
                 />
               </div>
@@ -118,7 +132,7 @@ function ClienteModal(props) {
                   type="text"
                   id="nomeAbreviado"
                   name="nomeAbreviado"
-                  value={cliente.nomeabreviado}
+                  value={nomeAbreviado}
                   onChange={handleChange}
                   required
                 />
@@ -129,7 +143,7 @@ function ClienteModal(props) {
                   type="text"
                   id="cpf"
                   name="cpf"
-                  value={cpf}
+                  value={formatCPF(cpf)}
                   onChange={handleCPFChange}
                   placeholder="Digite o CPF"
                   maxLength={14}
@@ -142,7 +156,7 @@ function ClienteModal(props) {
                   type="text"
                   id="telefone"
                   name="telefone"
-                  value={cliente.telefone}
+                  value={telefone}
                   onChange={handleChange}
                   required
                 />
@@ -153,7 +167,7 @@ function ClienteModal(props) {
                   <select
                     id="ativo"
                     name="ativo"
-                    value={cliente.ativo}
+                    value={ativo}
                     onChange={handleChange}>
                       <option value="SIM">Sim</option>
                       <option value="NAO">Não</option>
@@ -162,7 +176,7 @@ function ClienteModal(props) {
               </div>
               <div className="modal-button-container">
                 <button type="submit">Salvar</button>
-                <button type="button">Cancelar</button>
+                <button type="button" onClick={handleCloseModal}>Cancelar</button>
               </div>
             </form>
           </div>

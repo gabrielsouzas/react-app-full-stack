@@ -12,21 +12,23 @@ const fetchClienteById = async (idcliente) => {
 
 const insertCliente = async (cliente) => {
 
-    await fetch('http://localhost:3333/clientes', {
+    const response = await fetch('http://localhost:3333/clientes', {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(cliente),
     });
 
+    return response;
 }
 
 const updateCliente = async (cliente) => {
     const { idcliente } = cliente;
-    await fetch(`http://localhost:3333/clientes/${idcliente}`, {
+    const response = await fetch(`http://localhost:3333/clientes/${idcliente}`, {
         method: 'put',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(cliente),
     });
+    return response;
 }
 
 const deleteCliente = async (idcliente) => {

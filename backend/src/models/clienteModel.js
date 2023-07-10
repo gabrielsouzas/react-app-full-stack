@@ -12,11 +12,10 @@ const getById = async (idcliente) => {
 };
 
 const createCliente = async (cliente) => {
-
     const { nome, nomeabreviado, cpf, telefone, ativo } = cliente;
 
     // Insere os dados do cliente no banco
-    const query = 'INSERT INTO clientes(nome) VALUES (?,?,?,?,?)';
+    const query = 'INSERT INTO clientes(nome, nomeabreviado, cpf, telefone, ativo) VALUES (?,?,?,?,?)';
     const [createdCliente] = await connection.execute(query, [nome, nomeabreviado, cpf, telefone, ativo]);
 
     // Retorna apenas o ID inserido

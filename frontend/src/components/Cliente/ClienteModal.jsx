@@ -12,7 +12,7 @@ function ClienteModal(props) {
   const [nomeAbreviado, setNomeAbreviado] = useState("");
   const [cpf, setCPF] = useState("");
   const [telefone, setTelefone] = useState("");
-  const [ativo, setAtivo] = useState("Não");
+  const [ativo, setAtivo] = useState("Sim");
   
   //const [cliente, setCliente] = useState([]);
 
@@ -22,7 +22,7 @@ function ClienteModal(props) {
     setNomeAbreviado("");
     setCPF("");
     setTelefone("");
-    setAtivo("Não");
+    setAtivo("Sim");
   }
 
   const handleCloseModal = () => {
@@ -32,10 +32,36 @@ function ClienteModal(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log("teste")
-    // Aqui serão enviados os dados para o backend
-    //console.log(formValues);
+    props.idCliente ? handleUpdateCliente() : handleInsertCliente();
   };
+
+  const handleInsertCliente = () => {
+    clienteService.insertCliente({
+      nome,
+      nomeabreviado: nomeAbreviado,
+      cpf,
+      telefone,
+      ativo,
+    }).then((response)=>{
+      response.status === 201 ? alert("Cliente inserido com sucesso!") : alert("Erro ao inserir Cliente.");
+      handleCloseModal();
+    });
+  }
+
+  const handleUpdateCliente = () => {
+    clienteService.updateCliente({
+      idcliente: idCliente,
+      nome,
+      nomeabreviado: nomeAbreviado,
+      cpf,
+      telefone,
+      ativo,
+    }).then((response)=>{
+      console.log(response);
+      response.status === 201 ? alert("Cliente atualizado com sucesso!") : alert("Erro ao atualizar Cliente.");
+      handleCloseModal();
+    });
+  }
 
   const handleCPFChange = (e) => {
     const { value } = e.target;
@@ -68,14 +94,6 @@ function ClienteModal(props) {
       })
       : cleanCliente();
   }, [props.idCliente]);
-
-  /*const handleChange = (value) => {
-    // Pega os valores anteriores e adiciona os novos
-    setCliente(prevValue=>({
-      ...prevValue,
-      [value.target.name]: value.target.value,
-    }));
-  }*/
 
   return (
     <div>

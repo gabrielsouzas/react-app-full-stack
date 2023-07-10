@@ -30,41 +30,10 @@ export const formatPhoneNumberInput = (value) => {
   const unformattedValue = value ? value.replace(/[().-\s]/g, "") : "";
 
   const parts = unformattedValue.match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
-
-  //console.log(parts)
   
   const formattedPhone = !parts[2]
     ? `${parts[1] ? `(${parts[1]}` : "" }`
     : `${!parts[3] ? `(${parts[1]}) ${parts[2]}` : `(${parts[1]}) ${parts[2]}-${parts[3]}`}`;
   
   return formattedPhone;
-/*
-  var formattedPhoneNumber = "";
-  if (!parts[2]) {
-    if (parts[1]) {
-      console.log(`(${parts[1]}`)
-      formattedPhoneNumber = `(${parts[1]}`;
-      //console.log(formattedPhoneNumber);
-      //return `(${parts[1]}`;
-    }
-  } else if (!parts[3]){
-    console.log(`(${parts[1]}) ${parts[2]}`);
-    formattedPhoneNumber = `(${parts[1]}) ${parts[2]}`;
-    //console.log(formattedPhoneNumber);
-    //return `(${parts[1]}) ${parts[2]}`;
-  } else {
-    console.log(`(${parts[1]}) ${parts[2]}-${parts[3]}`);
-    formattedPhoneNumber = `(${parts[1]}) ${parts[2]}-${parts[3]}`;
-    //console.log(formattedPhoneNumber);
-    //return `(${parts[1]}) ${parts[2]}-${parts[3]}`;
-  }
-
-  console.log(`Completo: ${formattedPhoneNumber}`)
-  return formattedPhoneNumber;
-/*
-  const formattedCPF = !parts[2]
-    ? parts[1]
-    : `(${parts[1]}) ${parts[2]}${parts[3] ? `-${parts[3]}` : ""}${parts[4] ? `-${parts[4]}` : ""}`;
-
-  return formattedCPF;*/
 };

@@ -16,7 +16,7 @@ function Cliente() {
     clienteService.fetchClientes().then((response) => {
       setClientes(response);
     });
-  }, []);
+  }, [clientes]);
 
   const handleOpenModal = () => {
     setIsOpen(true);

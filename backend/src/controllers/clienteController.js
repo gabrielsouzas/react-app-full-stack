@@ -22,7 +22,7 @@ const updateCliente = async (request, response) => {
     // Dos parâmetros da requisição tira o id
     const { idcliente } = request.params;
 
-    // Executa a função de atualizar passando o id passado por parâmetro na URL e os dados da cliente pelo body
+    // Executa a função de atualizar passando o id passado por parâmetro na URL e os dados do cliente pelo body
     await clienteModel.updateCliente(idcliente, request.body);
 
     // Retorna um status que deu certo (204)

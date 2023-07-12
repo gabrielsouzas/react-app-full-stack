@@ -13,7 +13,7 @@ function Cliente() {
   const [isOpen, setIsOpen] = useState(false);
   const [idCliente, setIdCliente] = useState();
 
-  const [confirmIsOpen, setConfirmIsOpen] = useState(true);
+  const [confirmIsOpen, setConfirmIsOpen] = useState(false);
 
   useEffect(() => {
     clienteService.fetchClientes().then((response) => {
@@ -45,6 +45,10 @@ function Cliente() {
       <Modal
         confirmIsOpen={confirmIsOpen}
         setConfirmIsOpen={setConfirmIsOpen}
+        title={"Excluir Cliente"}
+        text={"Tem certeza que quer excluir esse Cliente?"}
+        confirm={"Sim"}
+        cancel={true}
       />
       <ClienteModal
         isOpen={isOpen} 

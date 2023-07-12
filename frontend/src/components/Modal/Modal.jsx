@@ -4,6 +4,8 @@ import './Modal.css';
 
 function Modal(props) {
 
+    const { title, text, confirm, cancel } = props;
+
     const handleCloseModal = () => {
         props.setConfirmIsOpen(false);
       };
@@ -14,17 +16,19 @@ function Modal(props) {
             <div className="modal">
               <div className="modal-content">
                 <div className="modal-title">
-                  <h3>Props.Title</h3>
+                  <h3>{title}</h3>
                   <span className="close" onClick={handleCloseModal}>
                     &times;
                   </span>
                 </div>
                 <div className="modal-text">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit?</p>
+                    <p>{text}</p>
                 </div>
                 <div className="modal-button-container">
-                    <button type="submit">Props</button>
-                    <button type="button" onClick={handleCloseModal}>Cancelar</button>
+                    <button type="submit">{confirm}</button>
+                    {cancel && 
+                        <button type="button" onClick={handleCloseModal}>Cancelar</button>
+                    }
                 </div>
               </div>
             </div>

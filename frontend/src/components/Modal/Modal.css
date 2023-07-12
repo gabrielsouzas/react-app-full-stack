@@ -1,4 +1,4 @@
-.cliente-modal {
+.modal {
     display: block;
     position: fixed;
     z-index: 1;
@@ -10,15 +10,15 @@
     background-color: rgba(0, 0, 0, 0.4);
   }
   
-  .cliente-modal-content {
+  .modal-content {
     background-color: #fefefe;
     margin: 15% auto;
-    width: 800px;
+    width: 400px;
     background-color: #232c36;
     border-radius: 5px;
   }
 
-  .cliente-modal-title {
+  .modal-title {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -29,7 +29,7 @@
     padding: 8px 20px;
   }
 
-  .cliente-modal-content form {
+  .modal-text {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -38,54 +38,29 @@
     padding: 0 20px;
   }
 
-  .cliente-modal-content div {
+  .modal-content div {
     display: flex;
     gap: 8px;
     width: 100%;
     align-items: center;
   }
 
-  .cliente-modal-content label {
-    width: 170px;
-    text-align: right;
+  .modal-text p {
+    width: 100%;
     color: #acaeaf;
     font-size: 1rem;
-    font-weight: 600;
+    text-align: center;
+    padding: 10px;
   }
 
-  .cliente-modal-content input {
-    width: 100%;
+  .modal-button-container {
+    justify-content: center;
+    padding: 20px;
   }
 
-  .cliente-modal-content input, .cliente-modal-content select {
-    background-color: #14191f;
-    border: none;
-    border-radius: 4px;
-    color: #aaa;
-    padding: 5px;
-  }
-
-  .cliente-modal-content input:focus {
-    box-shadow: 0 0 0 0;
-    outline: 0;
-  }
-
-  .cliente-modal-content select {
-    padding: 2px 8px;
-  }
-
-  .cliente-modal-content select#ativo {
-    width: 80px;
-    height: 26px;
-  }
-
-  .cliente-modal-button-container {
-    justify-content: end;
-    padding-bottom: 20px;
-  }
-
-  .cliente-modal-button-container button {
+  .modal-button-container button {
     padding: 5px 17px;
+    width: 100px;
     margin: 0;
     font-size: 1rem;
   }

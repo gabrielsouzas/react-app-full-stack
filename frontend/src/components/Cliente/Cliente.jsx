@@ -3,6 +3,7 @@ import './Cliente.css';
 
 import { formatCpf, formatPhoneNumber } from "../../utils/format";
 import ClienteModal from "./ClienteModal";
+import Modal from "../Modal/Modal";
 
 const clienteService = require('../../services/clienteService');
 
@@ -12,6 +13,8 @@ function Cliente() {
   const [isOpen, setIsOpen] = useState(false);
   const [idCliente, setIdCliente] = useState();
 
+  const [confirmIsOpen, setConfirmIsOpen] = useState(true);
+
   useEffect(() => {
     clienteService.fetchClientes().then((response) => {
       setClientes(response);
@@ -20,6 +23,10 @@ function Cliente() {
 
   const handleOpenModal = () => {
     setIsOpen(true);
+  };
+
+  const handleOpenConfirm = () => {
+    setConfirmIsOpen(true);
   };
 
   const handleClickBtnAlterar = (id) => {
@@ -35,6 +42,10 @@ function Cliente() {
   
   return (
     <>
+      <Modal
+        confirmIsOpen={confirmIsOpen}
+        setConfirmIsOpen={setConfirmIsOpen}
+      />
       <ClienteModal
         isOpen={isOpen} 
         setIsOpen={setIsOpen}

@@ -58,7 +58,7 @@ function ClienteModal(props) {
       ativo,
     }).then((response)=>{
       console.log(response);
-      response.status === 201 ? alert("Cliente atualizado com sucesso!") : alert("Erro ao atualizar Cliente.");
+      response.status === 204 ? alert("Cliente atualizado com sucesso!") : alert("Erro ao atualizar Cliente.");
       handleCloseModal();
     });
   }
@@ -98,9 +98,9 @@ function ClienteModal(props) {
   return (
     <div>
       {props.isOpen && (
-        <div className="modal">
-          <div className="modal-content">
-            <div className="modal-title">
+        <div className="cliente-modal">
+          <div className="cliente-modal-content">
+            <div className="cliente-modal-title">
               <h3>Cadastrar/Alterar Cliente</h3>
               <span className="close" onClick={handleCloseModal}>
                 &times;
@@ -181,7 +181,7 @@ function ClienteModal(props) {
                   </select>
                 </div>
               </div>
-              <div className="modal-button-container">
+              <div className="cliente-modal-button-container">
                 <button type="submit">Salvar</button>
                 <button type="button" onClick={handleCloseModal}>Cancelar</button>
               </div>

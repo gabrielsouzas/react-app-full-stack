@@ -1,19 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import './Cliente.css';
 
 import { formatCpf, formatPhoneNumber } from "../../utils/format";
 import ClienteModal from "./ClienteModal";
 import Modal from "../Modal/Modal";
+//import AppContext from "../../context/AppContext";
 
 const clienteService = require('../../services/clienteService');
 
 function Cliente() {
 
+  //const { confirm, setConfirm } = useContext(AppContext)
+
   const [clientes, setClientes] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
+  const [clienteModalOpen, setClienteModalOpen] = useState(false);
   const [idCliente, setIdCliente] = useState();
 
-  const [confirmIsOpen, setConfirmIsOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [userChoice, setUserChoice] = useState(false);
+
 
   useEffect(() => {
     clienteService.fetchClientes().then((response) => {
@@ -21,43 +26,73 @@ function Cliente() {
     });
   }, [clientes]);
 
-  const handleOpenModal = () => {
-    setIsOpen(true);
+  const handleOpenClienteModal = () => {
+    setClienteModalOpen(true);
   };
 
-  const handleOpenConfirm = () => {
-    setConfirmIsOpen(true);
+  const handleOpenModal = () => {
+    setModalOpen(true);
   };
 
   const handleClickBtnAlterar = (id) => {
     setIdCliente((prevValue) => prevValue = id);
 
-    handleOpenModal();
+    handleOpenClienteModal();
   }
+
+  const handleClickBtnExcluir = async (id) => {
+    setIdCliente((prevValue) => prevValue = id);
+
+    handleOpenModal();
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
+
+  const handleUserChoice = (choice) => {
+    setUserChoice((prevValue) => prevValue = choice);
+    handleCloseModal();
+    // Fechamento Modal
+    
+    choice && clienteService.deleteCliente(idCliente)
+  };
+
+  const handleResponse = (response) => {
+    //setUserChoice((prevValue) => prevValue = response);
+    //handleCloseModal();
+    // Fechamento Modal
+    
+    console.log(response)
+  };
 
   const handleClickNovo = () => {
     setIdCliente(null)
-    handleOpenModal();
+    handleOpenClienteModal();
   }
   
   return (
     <>
       <Modal
-        confirmIsOpen={confirmIsOpen}
-        setConfirmIsOpen={setConfirmIsOpen}
+        
         title={"Excluir Cliente"}
         text={"Tem certeza que quer excluir esse Cliente?"}
-        confirm={"Sim"}
+        confirmText={"Sim"}
         cancel={true}
+
+        isOpen={modalOpen}
+        onClose={handleCloseModal}
+        onUserChoice={handleUserChoice}
       />
       <ClienteModal
-        isOpen={isOpen} 
-        setIsOpen={setIsOpen}
+        isOpen={clienteModalOpen} 
+        setIsOpen={setClienteModalOpen}
         idCliente={idCliente}
+        onResponse={handleResponse}
       />
     <div className="cliente">
       <div className="cliente-title">
-        <h1>Clientes</h1>
+        <h1>Clientes </h1>
         {/*<button onClick={() => clienteService.insertCliente({nome: "Kalvin"})}>Novo</button>*/}
         <button onClick={handleClickNovo}>Novo</button>
       </div>
@@ -87,7 +122,7 @@ function Cliente() {
                         <td>{value.ativo}</td>
                         <td>
                           <button type="button" onClick={() => {handleClickBtnAlterar(value.idcliente)}}>Alterar</button>
-                          <button type="button" onClick={() => clienteService.deleteCliente(value.idcliente)}>Excluir</button>
+                          <button type="button" onClick={() => {handleClickBtnExcluir(value.idcliente)}}>Excluir</button>
                         </td>
                       </tr>
                     )

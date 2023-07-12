@@ -7,6 +7,8 @@ import './ClienteModal.css';
 
 function ClienteModal(props) {
 
+  const { onResponse } = props;
+
   const [idCliente, setIdCliente] = useState(0);
   const [nome, setNome] = useState("");
   const [nomeAbreviado, setNomeAbreviado] = useState("");
@@ -57,8 +59,8 @@ function ClienteModal(props) {
       telefone,
       ativo,
     }).then((response)=>{
-      console.log(response);
-      response.status === 204 ? alert("Cliente atualizado com sucesso!") : alert("Erro ao atualizar Cliente.");
+      //response.status === 204 ? alert("Cliente atualizado com sucesso!") : alert("Erro ao atualizar Cliente.");
+      onResponse(response);
       handleCloseModal();
     });
   }

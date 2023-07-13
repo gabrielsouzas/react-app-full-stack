@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import './Cliente.css';
 
 import { formatCpf, formatPhoneNumber } from "../../utils/format";
+import { verifyResponse } from "../../utils/validation";
 import ClienteModal from "./ClienteModal";
 import Modal from "../Modal/Modal";
 //import AppContext from "../../context/AppContext";
@@ -64,6 +65,7 @@ function Cliente() {
     // Fechamento Modal
     
     console.log(response)
+    const modalText = verifyResponse(response.status);
   };
 
   const handleClickNovo = () => {

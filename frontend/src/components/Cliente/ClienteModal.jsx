@@ -45,7 +45,8 @@ function ClienteModal(props) {
       telefone,
       ativo,
     }).then((response)=>{
-      response.status === 201 ? alert("Cliente inserido com sucesso!") : alert("Erro ao inserir Cliente.");
+      //response.status === 201 ? alert("Cliente inserido com sucesso!") : alert("Erro ao inserir Cliente.");
+      onResponse(response);
       handleCloseModal();
     });
   }

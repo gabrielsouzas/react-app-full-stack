@@ -72,33 +72,38 @@ button:hover {
 
 /* Paginação tabela*/
 
-nav {
+.cliente-pagination {
     padding: 0 15px;
 }
 
-nav ul {
+.cliente-pagination div {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 2px;
+    gap: 4px;
     list-style: none;
     background-color: #2C3845;
     border-radius: 5px;
     border: 1px solid #202932;
 }
 
-nav li {
-    padding: 8px 0;
-}
-
-nav a {
+.cliente-pagination button {
+    margin: 5px 0;
     background-color: #65707D;
     border-radius: 5px;
     padding: 3px 10px;
     color: #fff;
 }
 
-nav a:hover {
+.cliente-pagination button:hover {
     background-color: #3c434b;
+}
+
+.cliente-pagination .current-page {
+    background-color: #628b8b;
+}
+
+.cliente-pagination .current-page:hover {
+    background-color: #628b8b;
 }

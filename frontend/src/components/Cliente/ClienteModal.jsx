@@ -47,6 +47,7 @@ function ClienteModal(props) {
     }).then((response)=>{
       //response.status === 201 ? alert("Cliente inserido com sucesso!") : alert("Erro ao inserir Cliente.");
       onResponse(response);
+      cleanCliente();
       handleCloseModal();
     });
   }
@@ -62,6 +63,7 @@ function ClienteModal(props) {
     }).then((response)=>{
       //response.status === 204 ? alert("Cliente atualizado com sucesso!") : alert("Erro ao atualizar Cliente.");
       onResponse(response);
+      cleanCliente();
       handleCloseModal();
     });
   }
@@ -179,8 +181,8 @@ function ClienteModal(props) {
                     name="ativo"
                     value={ativo}
                     onChange={(e) => setAtivo(e.target.value)}>
-                      <option value="SIM">Sim</option>
-                      <option value="NAO">Não</option>
+                      <option value="Sim">Sim</option>
+                      <option value="Não">Não</option>
                   </select>
                 </div>
               </div>

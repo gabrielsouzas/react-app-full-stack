@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import './Cliente.css';
 
 import { formatCpf, formatPhoneNumber } from "../../utils/format";
-import { verifyResponse } from "../../utils/validation";
 import ClienteModal from "./ClienteModal";
 import Modal from "../Modal/Modal";
 //import AppContext from "../../context/AppContext";
@@ -17,8 +16,9 @@ function Cliente() {
   const [clienteModalOpen, setClienteModalOpen] = useState(false);
   const [idCliente, setIdCliente] = useState();
 
+  // Modal useStates
   const [modalOpen, setModalOpen] = useState(false);
-  const [userChoice, setUserChoice] = useState(false);
+  //const [userChoice, setUserChoice] = useState(false);
   const [modalContent, setModalContent] = useState({
     title: "Excluir Cliente",
     text: "Tem certeza que quer excluir esse Cliente?",
@@ -27,11 +27,24 @@ function Cliente() {
     delete: true,
   });
 
+  // Table useStates
+  const itemsPerPage = 5;
+  const [currentPage, setCurrentPage] = useState(1);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const [totalPages, setTotalPages] = useState(0);
+  const [currentData, setCurrentData] = useState([]);
+
+  //const totalPages = Math.ceil(clientes.length / itemsPerPage);
+  //const currentData = clientes.slice(startIndex, endIndex);
+
   useEffect(() => {
     clienteService.fetchClientes().then((response) => {
       setClientes(response);
+      setTotalPages(Math.ceil(clientes.length / itemsPerPage));
+      setCurrentData(clientes.slice(startIndex, endIndex));
     });
-  }, [clientes]);
+  }, [clientes, endIndex, startIndex]);
 
   const handleOpenClienteModal = () => {
     setClienteModalOpen(true);
@@ -66,7 +79,7 @@ function Cliente() {
   };
 
   const handleUserChoice = (choice) => {
-    setUserChoice((prevValue) => prevValue = choice);
+    //setUserChoice((prevValue) => prevValue = choice);
     handleCloseModal();
     // Fechamento Modal
     
@@ -96,9 +109,27 @@ function Cliente() {
   };
 
   const handleClickNovo = () => {
-    setIdCliente(null)
+    setIdCliente((prevValue) => prevValue = null)
     handleOpenClienteModal();
   }
+
+  // Table pagination
+
+  const nextPage = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
+  const previousPage = () => {
+    setCurrentPage(currentPage - 1);
+  };
+
+  const firstPage = () => {
+    setCurrentPage(1);
+  };
+
+  const lastPage = () => {
+    setCurrentPage(totalPages);
+  };
   
   return (
     <>
@@ -140,7 +171,8 @@ function Cliente() {
                 </thead>
                 <tbody>
                 {
-                  typeof clientes !== "undefined" && clientes.map((value) => {
+                  //typeof clientes !== "undefined" && clientes.map((value) => {
+                    typeof currentData !== "undefined" && currentData.map((value) => {
                     return (
                       <tr>
                         <td>{value.idcliente}</td>
@@ -160,18 +192,23 @@ function Cliente() {
                 </tbody>
               </table>
             </div>
-      <nav>
-        <ul>
-          <li><a href="#Primeira">Primeira</a></li>
-          <li><a href="#Anterior">Anterior</a></li>
-          <li><a href="#1">1</a></li>
-          <li><a href="#2">2</a></li>
-          <li><a href="#3">3</a></li>
-          <li><a href="#10">10</a></li>
-          <li><a href="#Proxima">Próxima</a></li>
-          <li><a href="#Ultima">Última</a></li>
-        </ul>
-      </nav>
+      <div className="cliente-pagination">
+        <div className="cliente-pagination-content">
+        <button onClick={firstPage} disabled={currentPage === 1}>Primeira</button>
+        <button onClick={previousPage} disabled={currentPage === 1}>Anterior</button>
+        {currentPage !== 1 && (
+          <button onClick={previousPage}>{currentPage - 1}</button>
+          )
+        }
+        <button className="current-page">{currentPage}</button>
+        {currentPage !== totalPages && (
+          <button className="next-button" onClick={nextPage}>{currentPage + 1}</button>
+          )
+        }
+        <button onClick={nextPage} disabled={currentPage === totalPages}>Próxima</button>
+        <button onClick={lastPage} disabled={currentPage === totalPages}>Última</button>
+        </div>
+      </div>
     </div>
     </>
   );

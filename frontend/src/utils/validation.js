@@ -6,10 +6,10 @@ export const verifyGeneralResponse = (responseStatus) => {
             responseStatus >= 500 ? "SERVER_ERROR" : "INVALID_STATUS";
 }
 
-export const verifyResponse = (responseStatus) => {
-    return responseStatus === 200 ? "OK" :
-    responseStatus === 201 ? "CREATED" :
+export const verifyResponse = (entity, pr, responseStatus) => {
+    return responseStatus === 200 ? `Operação com ${entity} realizada com sucesso!` :
+    responseStatus === 201 ? `${entity} inserid${pr} com sucesso!` :
     responseStatus === 204 ? "UPDATED_DELETED" :
     responseStatus >= 400 && responseStatus < 500 ? "CLIENT_ERROR" :
-    responseStatus >= 500 ? "SERVER_ERROR" : "INVALID_STATUS";
+    responseStatus >= 500 ? "SERVER_ERROR" : "UNKNOW_STATUS";
 }

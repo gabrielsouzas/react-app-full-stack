@@ -32,9 +32,10 @@ const updateCliente = async (cliente) => {
 }
 
 const deleteCliente = async (idcliente) => {
-    await fetch(`http://localhost:3333/clientes/${idcliente}`, {
+    const response = await fetch(`http://localhost:3333/clientes/${idcliente}`, {
         method: 'delete',
     });
+    return response;
 }
 
 module.exports = {

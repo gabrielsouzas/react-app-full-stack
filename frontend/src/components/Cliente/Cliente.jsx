@@ -19,7 +19,13 @@ function Cliente() {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [userChoice, setUserChoice] = useState(false);
-
+  const [modalContent, setModalContent] = useState({
+    title: "Excluir Cliente",
+    text: "Tem certeza que quer excluir esse Cliente?",
+    confirmText: "Sim",
+    cancel: true,
+    delete: true,
+  });
 
   useEffect(() => {
     clienteService.fetchClientes().then((response) => {
@@ -44,6 +50,14 @@ function Cliente() {
   const handleClickBtnExcluir = async (id) => {
     setIdCliente((prevValue) => prevValue = id);
 
+    setModalContent({
+      title: "Excluir Cliente",
+      text: "Tem certeza que quer excluir esse Cliente?",
+      confirmText: "Sim",
+      cancel: true,
+      delete: true,
+    })
+
     handleOpenModal();
   };
 
@@ -56,7 +70,7 @@ function Cliente() {
     handleCloseModal();
     // Fechamento Modal
     
-    choice && clienteService.deleteCliente(idCliente)
+    modalContent.delete && choice && clienteService.deleteCliente(idCliente);
   };
 
   const handleResponse = (response) => {
@@ -64,8 +78,21 @@ function Cliente() {
     //handleCloseModal();
     // Fechamento Modal
     
-    console.log(response)
-    const modalText = verifyResponse(response.status);
+    
+    const modalText = response.status === 201 ? "Cliente inserido com sucesso!" :
+                      response.status === 204 ? "Cliente alterado com sucesso!" :
+                      response.status === 200 ? "Cliente excluído com sucesso!" :
+                      response.status >= 400 && response.status < 500 ? "Erro na solicitação do cliente! Consulte o administrador do sistema." :
+                      response.status >= 500 ? "Erro na resposta do servidor! Consulte o administrador do sistema." : "Resposta desconhecida, verifique se os dados foram salvos e consulte o administrador do sistema.";
+    setModalContent({
+      title: "Resposta operação",
+      text: modalText,
+      confirmText: "OK",
+      cancel: false,
+      delete: false,
+    })
+
+    handleOpenModal();
   };
 
   const handleClickNovo = () => {
@@ -77,10 +104,10 @@ function Cliente() {
     <>
       <Modal
         
-        title={"Excluir Cliente"}
-        text={"Tem certeza que quer excluir esse Cliente?"}
-        confirmText={"Sim"}
-        cancel={true}
+        title={modalContent.title}
+        text={modalContent.text}
+        confirmText={modalContent.confirmText}
+        cancel={modalContent.cancel}
 
         isOpen={modalOpen}
         onClose={handleCloseModal}

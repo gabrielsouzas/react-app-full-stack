@@ -37,8 +37,8 @@ const deleteCliente = async (request, response) => {
     // Executa a função deleteCliente passando o id capturado
     await clienteModel.deleteCliente(idcliente);
 
-    // Retorna um status que deu certo (204)
-    return response.status(204).json();
+    // Retorna um status que deu certo (200)
+    return response.status(200).json();
 };
 
 module.exports = {

@@ -40,13 +40,27 @@ function Cliente() {
   const [searchTerm, setSearchTerm] = useState('');
   //const [filteredData, setFilteredData] = useState(clientes);
 
+  const normalizeString = (str) => {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  };
+
   const handleSearch = (e) => {
     const searchTerm = e.target.value;
     setSearchTerm(searchTerm);
 
     // Filtrar os dados com base no critério de pesquisa
     const filteredData = clientes.filter(item => {
-      return item.nome.toLowerCase().includes(searchTerm.toLowerCase());
+
+      // Normalizar o texto para remover acentos e caracteres especiais
+      const normalizedSearchTerm = normalizeString(searchTerm.toLowerCase());
+      const normalizedNome = normalizeString(item.nome.toLowerCase());
+      //const normalizedEmail = normalizeString(item.email.toLowerCase());
+
+      // Verificar se o nome ou email contém o termo de pesquisa normalizado
+      return normalizedNome.includes(normalizedSearchTerm);
+      //|| normalizedEmail.includes(normalizedSearchTerm);
+
+      //return item.nome.toLowerCase().includes(searchTerm.toLowerCase());
       //|| item.email.toLowerCase().includes(searchTerm.toLowerCase());
     });
 

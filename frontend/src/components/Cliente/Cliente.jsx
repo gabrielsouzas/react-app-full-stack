@@ -35,16 +35,35 @@ function Cliente() {
   const [totalPages, setTotalPages] = useState(0);
   const [currentData, setCurrentData] = useState([]);
 
-  //const totalPages = Math.ceil(clientes.length / itemsPerPage);
-  //const currentData = clientes.slice(startIndex, endIndex);
+  
+  const [searchTerm, setSearchTerm] = useState('');
+  //const [filteredData, setFilteredData] = useState(clientes);
+
+  const handleSearch = (e) => {
+    const searchTerm = e.target.value;
+    setSearchTerm(searchTerm);
+
+    // Filtrar os dados com base no critério de pesquisa
+    const filteredData = clientes.filter(item => {
+      return item.nome.toLowerCase().includes(searchTerm.toLowerCase());
+      //|| item.email.toLowerCase().includes(searchTerm.toLowerCase());
+    });
+
+    //console.log(filteredData)
+    //setFilteredData(filteredData);
+    setTotalPages(Math.ceil(filteredData.length / itemsPerPage));
+    setCurrentData(filteredData.slice(startIndex, endIndex));
+    //setCurrentData(filteredData);
+    setCurrentPage(1); // Redefinir a página atual ao pesquisar
+  };
 
   useEffect(() => {
     clienteService.fetchClientes().then((response) => {
       setClientes(response);
-      setTotalPages(Math.ceil(clientes.length / itemsPerPage));
-      setCurrentData(clientes.slice(startIndex, endIndex));
+      setTotalPages(Math.ceil(response.length / itemsPerPage));
+      setCurrentData(response.slice(startIndex, endIndex));
     });
-  }, [clientes, endIndex, startIndex]);
+  }, [endIndex, startIndex]); //clientes, endIndex, startIndex
 
   const handleOpenClienteModal = () => {
     setClienteModalOpen(true);
@@ -151,6 +170,12 @@ function Cliente() {
         onResponse={handleResponse}
       />
     <div className="cliente">
+    <input
+        type="text"
+        value={searchTerm}
+        onChange={handleSearch}
+        placeholder="Pesquisar por nome ou email"
+      />
       <div className="cliente-title">
         <h1>Clientes </h1>
         {/*<button onClick={() => clienteService.insertCliente({nome: "Kalvin"})}>Novo</button>*/}

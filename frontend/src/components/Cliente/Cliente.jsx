@@ -49,11 +49,9 @@ function Cliente() {
       //|| item.email.toLowerCase().includes(searchTerm.toLowerCase());
     });
 
-    //console.log(filteredData)
-    //setFilteredData(filteredData);
+    //Refaz os calculos de alocação de página e ajusta aos dados filtrados
     setTotalPages(Math.ceil(filteredData.length / itemsPerPage));
     setCurrentData(filteredData.slice(startIndex, endIndex));
-    //setCurrentData(filteredData);
     setCurrentPage(1); // Redefinir a página atual ao pesquisar
   };
 
@@ -170,16 +168,20 @@ function Cliente() {
         onResponse={handleResponse}
       />
     <div className="cliente">
-    <input
-        type="text"
-        value={searchTerm}
-        onChange={handleSearch}
-        placeholder="Pesquisar por nome ou email"
-      />
+    
       <div className="cliente-title">
         <h1>Clientes </h1>
         {/*<button onClick={() => clienteService.insertCliente({nome: "Kalvin"})}>Novo</button>*/}
-        <button onClick={handleClickNovo}>Novo</button>
+        
+      </div>
+      <div className="cliente-search">
+      <input
+        type="text"
+        value={searchTerm}
+        onChange={handleSearch}
+        placeholder="Pesquisar por nome"
+      />
+      <button onClick={handleClickNovo}>Novo</button>
       </div>
             <div className="table-container">
               <table>

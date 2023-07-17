@@ -12,12 +12,34 @@
 .cliente-title h1 {
     color: #1f2933;
 }
-.cliente-title button {
+.cliente-search {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px 10px 15px;
+}
+.cliente-search input {
+    width: 100%;
+    height: 100%;
+    padding: 8px 5px;
+    background-color: #3c434b;
+    color: #FFF;
+    border: none;
+}
+.cliente-search input::placeholder {
+    color: #ffffff88;
+}
+.cliente-search input:focus {
+    box-shadow: 0 0 0 0;
+    outline: 0;
+  }
+.cliente-search button {
     padding: 10px 40px;
     background-color: #3c5f5f;
 }
-.cliente-title button:hover {
-    background-color: #628b8b;
+.cliente-search button:hover {
+    background-color: #1a2222;
 }
 .table-container {
     padding: 5px 15px;

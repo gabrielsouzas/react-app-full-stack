@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
-import clienteService from "../../services/clienteService"
+import React, { useEffect, useState } from 'react';
+import propTypes from 'prop-types';
+import clienteService from '../../services/clienteService';
 
-import { formatCPFInput, formatPhoneNumberInput } from "../../utils/format";
+import { formatCPFInput, formatPhoneNumberInput } from '../../utils/format';
 
 import './ClienteModal.css';
 
@@ -10,22 +11,22 @@ function ClienteModal(props) {
   const { onResponse } = props;
 
   const [idCliente, setIdCliente] = useState(0);
-  const [nome, setNome] = useState("");
-  const [nomeAbreviado, setNomeAbreviado] = useState("");
-  const [cpf, setCPF] = useState("");
-  const [telefone, setTelefone] = useState("");
-  const [ativo, setAtivo] = useState("Sim");
+  const [nome, setNome] = useState('');
+  const [nomeAbreviado, setNomeAbreviado] = useState('');
+  const [cpf, setCPF] = useState('');
+  const [telefone, setTelefone] = useState('');
+  const [ativo, setAtivo] = useState('Sim');
   
   //const [cliente, setCliente] = useState([]);
 
   const cleanCliente = () => {
-    setIdCliente("");
-    setNome("");
-    setNomeAbreviado("");
-    setCPF("");
-    setTelefone("");
-    setAtivo("Sim");
-  }
+    setIdCliente('');
+    setNome('');
+    setNomeAbreviado('');
+    setCPF('');
+    setTelefone('');
+    setAtivo('Sim');
+  };
 
   const handleCloseModal = () => {
     props.setIsOpen(false);
@@ -50,7 +51,7 @@ function ClienteModal(props) {
       cleanCliente();
       handleCloseModal();
     });
-  }
+  };
 
   const handleUpdateCliente = () => {
     clienteService.updateCliente({
@@ -66,12 +67,12 @@ function ClienteModal(props) {
       cleanCliente();
       handleCloseModal();
     });
-  }
+  };
 
   const handleCPFChange = (e) => {
     const { value } = e.target;
     // Remove qualquer caractere que não seja dígito
-    const cleanedValue = value.replace(/\D/g, "");
+    const cleanedValue = value.replace(/\D/g, '');
     // Aplica a formatação do CPF
     const formattedValue =  formatCPFInput(cleanedValue);
     setCPF(formattedValue);
@@ -79,13 +80,13 @@ function ClienteModal(props) {
 
   const handleTelefoneChange = (e) => {
     const { value } = e.target;
-    const cleanedValue = value.replace(/\D/g, "");
+    const cleanedValue = value.replace(/\D/g, '');
     const formattedValue =  formatPhoneNumberInput(cleanedValue);
     setTelefone(formattedValue);
   };
 
   useEffect(() => {
-      props.idCliente
+    props.idCliente
       ? clienteService.fetchClienteById(props.idCliente).then((response) => {
         const [ data ] = response;
         const { idcliente, nome, nomeabreviado, cpf, telefone, ativo } = data;
@@ -181,8 +182,8 @@ function ClienteModal(props) {
                     name="ativo"
                     value={ativo}
                     onChange={(e) => setAtivo(e.target.value)}>
-                      <option value="Sim">Sim</option>
-                      <option value="Não">Não</option>
+                    <option value="Sim">Sim</option>
+                    <option value="Não">Não</option>
                   </select>
                 </div>
               </div>
@@ -199,3 +200,7 @@ function ClienteModal(props) {
 }
 
 export default ClienteModal;
+
+ClienteModal.propTypes = {
+  data: propTypes.object
+}.isRequired;

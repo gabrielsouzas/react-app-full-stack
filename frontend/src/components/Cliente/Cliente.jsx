@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import './Cliente.css';
 
-import { formatCpf, formatPhoneNumber } from "../../utils/format";
-import ClienteModal from "./ClienteModal";
-import Modal from "../Modal/Modal";
+import { formatCpf, formatPhoneNumber } from '../../utils/format';
+import ClienteModal from './ClienteModal';
+import Modal from '../Modal/Modal';
 //import AppContext from "../../context/AppContext";
 
+// eslint-disable-next-line no-undef
 const clienteService = require('../../services/clienteService');
 
 function Cliente() {
@@ -20,9 +21,9 @@ function Cliente() {
   const [modalOpen, setModalOpen] = useState(false);
   //const [userChoice, setUserChoice] = useState(false);
   const [modalContent, setModalContent] = useState({
-    title: "Excluir Cliente",
-    text: "Tem certeza que quer excluir esse Cliente?",
-    confirmText: "Sim",
+    title: 'Excluir Cliente',
+    text: 'Tem certeza que quer excluir esse Cliente?',
+    confirmText: 'Sim',
     cancel: true,
     delete: true,
   });
@@ -55,12 +56,20 @@ function Cliente() {
     setCurrentPage(1); // Redefinir a página atual ao pesquisar
   };
 
+
   useEffect(() => {
-    clienteService.fetchClientes().then((response) => {
-      setClientes(response);
-      setTotalPages(Math.ceil(response.length / itemsPerPage));
-      setCurrentData(response.slice(startIndex, endIndex));
-    });
+    const fetchClientes = async () => {
+      try {
+        const response = await clienteService.fetchClientes();
+        setClientes(response);
+        setTotalPages(Math.ceil(response.length / itemsPerPage));
+        setCurrentData(response.slice(startIndex, endIndex));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchClientes();
   }, [endIndex, startIndex]); //clientes, endIndex, startIndex
 
   const handleOpenClienteModal = () => {
@@ -72,21 +81,23 @@ function Cliente() {
   };
 
   const handleClickBtnAlterar = (id) => {
-    setIdCliente((prevValue) => prevValue = id);
+    //setIdCliente((prevValue) => prevValue = id);
+    setIdCliente(id);
 
     handleOpenClienteModal();
-  }
+  };
 
   const handleClickBtnExcluir = async (id) => {
-    setIdCliente((prevValue) => prevValue = id);
+    //setIdCliente((prevValue) => prevValue = id);
+    setIdCliente(id);
 
     setModalContent({
-      title: "Excluir Cliente",
-      text: "Tem certeza que quer excluir esse Cliente?",
-      confirmText: "Sim",
+      title: 'Excluir Cliente',
+      text: 'Tem certeza que quer excluir esse Cliente?',
+      confirmText: 'Sim',
       cancel: true,
       delete: true,
-    })
+    });
 
     handleOpenModal();
   };
@@ -100,7 +111,23 @@ function Cliente() {
     handleCloseModal();
     // Fechamento Modal
     
-    modalContent.delete && choice && clienteService.deleteCliente(idCliente);
+    modalContent.delete && choice && clienteService.deleteCliente(idCliente).then(
+      fetchClientesChanged
+    );
+
+    fetchClientesChanged();
+    
+  };
+
+  const fetchClientesChanged = async () => {
+    try {
+      const response = await clienteService.fetchClientes();
+      setClientes(response);
+      setTotalPages(Math.ceil(response.length / itemsPerPage));
+      setCurrentData(response.slice(startIndex, endIndex));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleResponse = (response) => {
@@ -109,26 +136,27 @@ function Cliente() {
     // Fechamento Modal
     
     
-    const modalText = response.status === 201 ? "Cliente inserido com sucesso!" :
-                      response.status === 204 ? "Cliente alterado com sucesso!" :
-                      response.status === 200 ? "Cliente excluído com sucesso!" :
-                      response.status >= 400 && response.status < 500 ? "Erro na solicitação do cliente! Consulte o administrador do sistema." :
-                      response.status >= 500 ? "Erro na resposta do servidor! Consulte o administrador do sistema." : "Resposta desconhecida, verifique se os dados foram salvos e consulte o administrador do sistema.";
+    const modalText = response.status === 201 ? 'Cliente inserido com sucesso!' :
+      response.status === 204 ? 'Cliente alterado com sucesso!' :
+        response.status === 200 ? 'Cliente excluído com sucesso!' :
+          response.status >= 400 && response.status < 500 ? 'Erro na solicitação do cliente! Consulte o administrador do sistema.' :
+            response.status >= 500 ? 'Erro na resposta do servidor! Consulte o administrador do sistema.' : 'Resposta desconhecida, verifique se os dados foram salvos e consulte o administrador do sistema.';
     setModalContent({
-      title: "Resposta operação",
+      title: 'Resposta operação',
       text: modalText,
-      confirmText: "OK",
+      confirmText: 'OK',
       cancel: false,
       delete: false,
-    })
+    });
 
     handleOpenModal();
   };
 
   const handleClickNovo = () => {
-    setIdCliente((prevValue) => prevValue = null)
+    //setIdCliente((prevValue) => prevValue = null);
+    setIdCliente(null);
     handleOpenClienteModal();
-  }
+  };
 
   // Table pagination
 
@@ -167,76 +195,76 @@ function Cliente() {
         idCliente={idCliente}
         onResponse={handleResponse}
       />
-    <div className="cliente">
+      <div className="cliente">
     
-      <div className="cliente-title">
-        <h1>Clientes </h1>
-        {/*<button onClick={() => clienteService.insertCliente({nome: "Kalvin"})}>Novo</button>*/}
+        <div className="cliente-title">
+          <h1>Clientes </h1>
+          {/*<button onClick={() => clienteService.insertCliente({nome: "Kalvin"})}>Novo</button>*/}
         
-      </div>
-      <div className="cliente-search">
-      <input
-        type="text"
-        value={searchTerm}
-        onChange={handleSearch}
-        placeholder="Pesquisar por nome"
-      />
-      <button onClick={handleClickNovo}>Novo</button>
-      </div>
-            <div className="table-container">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Código</th>
-                    <th>Nome</th>
-                    <th>Nome Abv.</th>
-                    <th>CPF</th>
-                    <th>Telefone</th>
-                    <th>Ativo</th>
-                    <th>Manutenção</th>
-                  </tr>
-                </thead>
-                <tbody>
-                {
-                  //typeof clientes !== "undefined" && clientes.map((value) => {
-                    typeof currentData !== "undefined" && currentData.map((value) => {
-                    return (
-                      <tr>
-                        <td>{value.idcliente}</td>
-                        <td>{value.nome}</td>
-                        <td>{value.nomeabreviado}</td>
-                        <td>{formatCpf(value.cpf)}</td>
-                        <td>{formatPhoneNumber(value.telefone)}</td>
-                        <td>{value.ativo}</td>
-                        <td>
-                          <button type="button" onClick={() => {handleClickBtnAlterar(value.idcliente)}}>Alterar</button>
-                          <button type="button" onClick={() => {handleClickBtnExcluir(value.idcliente)}}>Excluir</button>
-                        </td>
-                      </tr>
-                    )
-                      })
-                    }
-                </tbody>
-              </table>
-            </div>
-      <div className="cliente-pagination">
-        <div className="cliente-pagination-content">
-        <button onClick={firstPage} disabled={currentPage === 1}>Primeira</button>
-        <button onClick={previousPage} disabled={currentPage === 1}>Anterior</button>
-        {currentPage !== 1 && (
-          <button onClick={previousPage}>{currentPage - 1}</button>
-          )
-        }
-        <button className="current-page">{currentPage}</button>
-        {currentPage !== totalPages && (
-          <button className="next-button" onClick={nextPage}>{currentPage + 1}</button>
-          )
-        }
-        <button onClick={nextPage} disabled={currentPage === totalPages}>Próxima</button>
-        <button onClick={lastPage} disabled={currentPage === totalPages}>Última</button>
+        </div>
+        <div className="cliente-search">
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={handleSearch}
+            placeholder="Pesquisar por nome"
+          />
+          <button onClick={handleClickNovo}>Novo</button>
+        </div>
+        <div className="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Código</th>
+                <th>Nome</th>
+                <th>Nome Abv.</th>
+                <th>CPF</th>
+                <th>Telefone</th>
+                <th>Ativo</th>
+                <th>Manutenção</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                //typeof clientes !== "undefined" && clientes.map((value) => {
+                typeof currentData !== 'undefined' && currentData.map((value) => {
+                  return (
+                    <tr key={value.idcliente}>
+                      <td>{value.idcliente}</td>
+                      <td>{value.nome}</td>
+                      <td>{value.nomeabreviado}</td>
+                      <td>{formatCpf(value.cpf)}</td>
+                      <td>{formatPhoneNumber(value.telefone)}</td>
+                      <td>{value.ativo}</td>
+                      <td>
+                        <button type="button" onClick={() => {handleClickBtnAlterar(value.idcliente);}}>Alterar</button>
+                        <button type="button" onClick={() => {handleClickBtnExcluir(value.idcliente);}}>Excluir</button>
+                      </td>
+                    </tr>
+                  );
+                })
+              }
+            </tbody>
+          </table>
+        </div>
+        <div className="cliente-pagination">
+          <div className="cliente-pagination-content">
+            <button onClick={firstPage} disabled={currentPage === 1}>Primeira</button>
+            <button onClick={previousPage} disabled={currentPage === 1}>Anterior</button>
+            {currentPage !== 1 && (
+              <button onClick={previousPage}>{currentPage - 1}</button>
+            )
+            }
+            <button className="current-page">{currentPage}</button>
+            {currentPage !== totalPages && (
+              <button className="next-button" onClick={nextPage}>{currentPage + 1}</button>
+            )
+            }
+            <button onClick={nextPage} disabled={currentPage === totalPages}>Próxima</button>
+            <button onClick={lastPage} disabled={currentPage === totalPages}>Última</button>
+          </div>
         </div>
       </div>
-    </div>
     </>
   );
 }

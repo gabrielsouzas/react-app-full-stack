@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Cliente.css';
 
 import { formatCpf, formatPhoneNumber } from '../../utils/format';
-import ClienteModal from './ClienteModal';
+import ClienteModal from '../ClienteModal/ClienteModal';
 import Modal from '../Modal/Modal';
 //import AppContext from "../../context/AppContext";
 
@@ -59,9 +59,6 @@ function Cliente() {
       // Verificar se o nome ou email contém o termo de pesquisa normalizado
       return normalizedNome.includes(normalizedSearchTerm);
       //|| normalizedEmail.includes(normalizedSearchTerm);
-
-      //return item.nome.toLowerCase().includes(searchTerm.toLowerCase());
-      //|| item.email.toLowerCase().includes(searchTerm.toLowerCase());
     });
 
     //Refaz os calculos de alocação de página e ajusta aos dados filtrados
@@ -213,8 +210,6 @@ function Cliente() {
     
         <div className="cliente-title">
           <h1>Clientes </h1>
-          {/*<button onClick={() => clienteService.insertCliente({nome: "Kalvin"})}>Novo</button>*/}
-        
         </div>
         <div className="cliente-search">
           <input

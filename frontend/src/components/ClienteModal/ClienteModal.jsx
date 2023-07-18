@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import propTypes from 'prop-types';
 import clienteService from '../../services/clienteService';
+import Loading from '../Loading/Loading';
 
 import { formatCPFInput, formatPhoneNumberInput } from '../../utils/format';
 
@@ -16,6 +17,8 @@ function ClienteModal(props) {
   const [cpf, setCPF] = useState('');
   const [telefone, setTelefone] = useState('');
   const [ativo, setAtivo] = useState('Sim');
+
+  const [loading, setLoading] = useState(false);
   
   //const [cliente, setCliente] = useState([]);
 
@@ -29,6 +32,7 @@ function ClienteModal(props) {
   };
 
   const handleCloseModal = () => {
+    cleanCliente();
     props.setIsOpen(false);
   };
 
@@ -48,12 +52,13 @@ function ClienteModal(props) {
     }).then((response)=>{
       //response.status === 201 ? alert("Cliente inserido com sucesso!") : alert("Erro ao inserir Cliente.");
       onResponse(response);
-      cleanCliente();
+      //cleanCliente();
       handleCloseModal();
     });
   };
 
   const handleUpdateCliente = () => {
+    setLoading(true);
     clienteService.updateCliente({
       idcliente: idCliente,
       nome,
@@ -62,9 +67,10 @@ function ClienteModal(props) {
       telefone,
       ativo,
     }).then((response)=>{
+      setLoading(false);
       //response.status === 204 ? alert("Cliente atualizado com sucesso!") : alert("Erro ao atualizar Cliente.");
       onResponse(response);
-      cleanCliente();
+      //cleanCliente();
       handleCloseModal();
     });
   };
@@ -188,7 +194,8 @@ function ClienteModal(props) {
                 </div>
               </div>
               <div className="cliente-modal-button-container">
-                <button type="submit">Salvar</button>
+                {(loading && <button>Salvando <Loading /></button>) || 
+                <button type="submit">Salvar</button>}
                 <button type="button" onClick={handleCloseModal}>Cancelar</button>
               </div>
             </form>

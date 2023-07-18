@@ -4,11 +4,11 @@ import AppContext from './AppContext';
 
 function Provider({children}) {
 
-  const [confirm, setConfirm] = useState(false);
+  const [entitySelected, setEntitySelected] = useState('cliente');
 
   const value = {
-    confirm,
-    setConfirm,
+    entitySelected,
+    setEntitySelected
   };
 
   return (

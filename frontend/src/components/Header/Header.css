@@ -10,14 +10,22 @@
 
 .header-title {
     background-color: #212529;
-    padding: 20px;
+    padding: 17px;
     color: #fff;
     width: 220px;
     min-width: 220px;
+    font-size: 1.3rem;
 }
 
 .header-container {
     width: 100%;
+}
+
+.header-container h2 {
+    text-align: end;
+    color: #ffffff9f;
+    font-size: 1rem;
+    letter-spacing: 1px;
 }
 
 .header-container input {

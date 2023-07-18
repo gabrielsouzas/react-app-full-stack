@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
+import AppContext from '../../context/AppContext';
 
 import { BsPeopleFill } from 'react-icons/bs';
 import { MdOutlineFactory } from 'react-icons/md';
@@ -11,11 +12,27 @@ import { AiOutlinePlusCircle } from 'react-icons/ai';
 import './Sidebar.css';
 
 function Sidebar() {
+
+  const [activeButton, setActiveButton] = useState('cliente');
+
+  const { setEntitySelected } = useContext(AppContext);
+
+  const handleClick = (entity) => {
+    setActiveButton(entity);
+    setEntitySelected(entity);
+  };
+
   return (
     <div className="sidebar">
       <div className="sidebar-entities">
-        <a href="#Clientes" id="sidebar_id_clientes"> <BsPeopleFill /> Clientes</a>
-        <a href="#Fornecedores"> <MdOutlineFactory /> Fornecedores</a>
+        <button 
+          className={activeButton === 'cliente' ? 'active' : ''}
+          onClick={() => handleClick('cliente')}
+        > <BsPeopleFill /> Clientes</button>
+        <button 
+          className={activeButton === 'fornecedor' ? 'active' : ''}
+          onClick={() => handleClick('fornecedor')}
+        > <MdOutlineFactory /> Fornecedores</button>
         <a href="#Serviços"> <AiOutlineCar /> Serviços</a>
       </div>
       <div className="sidebar-reports">

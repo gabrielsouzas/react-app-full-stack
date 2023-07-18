@@ -43,6 +43,7 @@ function ClienteModal(props) {
   };
 
   const handleInsertCliente = () => {
+    setLoading(true);
     clienteService.insertCliente({
       nome,
       nomeabreviado: nomeAbreviado,
@@ -50,6 +51,7 @@ function ClienteModal(props) {
       telefone,
       ativo,
     }).then((response)=>{
+      setLoading(false);
       //response.status === 201 ? alert("Cliente inserido com sucesso!") : alert("Erro ao inserir Cliente.");
       onResponse(response);
       //cleanCliente();

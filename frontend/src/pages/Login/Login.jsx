@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import authService from '../../services/authService';
 import userService from '../../services/userService';
+import './Login.css';
 
 function Login() {
 
@@ -11,6 +12,7 @@ function Login() {
   const [email, setEmail] = useState('super@gmail.com');
 
   // Função para lidar com o envio do formulário de login
+  // eslint-disable-next-line no-unused-vars
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -56,8 +58,25 @@ function Login() {
   };
 
   return (
-    <div>
-      <button type="submit" onClick={handleLogin}>Login</button>
+    <div className="login-box">
+      <h2>LOGIN</h2>
+      <form>
+        <div className="user-box">
+          <input type="text" name="" required />
+          <label>Usuário</label>
+        </div>
+        <div className="user-box">
+          <input type="password" name="" required />
+          <label>Senha</label>
+        </div>
+        <a href="#">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+                Entrar
+        </a>
+      </form>
     </div>
   );
 }

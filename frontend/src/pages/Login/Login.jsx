@@ -58,25 +58,21 @@ function Login() {
   };
 
   return (
-    <div className="login-box">
-      <h2>LOGIN</h2>
-      <form>
-        <div className="user-box">
-          <input type="text" name="" required />
-          <label>Usuário</label>
-        </div>
-        <div className="user-box">
-          <input type="password" name="" required />
-          <label>Senha</label>
-        </div>
-        <a href="#">
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-                Entrar
-        </a>
-      </form>
+    <div className="login-container">
+      <div className="login-box">
+        <h2>LOGIN</h2>
+        <form>
+          <div className="user-box">
+            <input type="text" name="" required />
+            <label>Usuário</label>
+          </div>
+          <div className="user-box">
+            <input type="password" name="" required />
+            <label>Senha</label>
+          </div>
+          <button type="submit">Entrar</button>
+        </form>
+      </div>
     </div>
   );
 }

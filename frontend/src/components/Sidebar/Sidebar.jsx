@@ -10,6 +10,7 @@ import { IoLogOutOutline } from 'react-icons/io5';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 
 import './Sidebar.css';
+import { Link } from 'react-router-dom';
 
 function Sidebar() {
 
@@ -20,6 +21,12 @@ function Sidebar() {
   const handleClick = (entity) => {
     setActiveButton(entity);
     setEntitySelected(entity);
+  };
+
+
+  const handleLogOut = () => {
+    // Inserir logout do token aqui
+    console.log('teste');
   };
 
   return (
@@ -43,7 +50,8 @@ function Sidebar() {
       </div>
       <div className="sidebar-utilities">
         <a href="#Configuracoes"> <IoSettingsOutline />Configurações</a>
-        <a href="#Sair"> <IoLogOutOutline /> Sair</a>
+        {/*<button onClick={handleLogout}> <IoLogOutOutline /> Sair</button>*/}
+        <Link to="/" onClick={handleLogOut}> <IoLogOutOutline /> Sair</Link>
       </div>
     </div>
   );

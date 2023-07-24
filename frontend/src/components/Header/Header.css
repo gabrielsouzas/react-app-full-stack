@@ -28,6 +28,10 @@
     letter-spacing: 1px;
 }
 
+.header-container h2 span {
+    text-transform: capitalize;
+}
+
 .header-container input {
     color: #fff;
     background-color: #4e4f5291;

@@ -5,10 +5,13 @@ import AppContext from './AppContext';
 function Provider({children}) {
 
   const [entitySelected, setEntitySelected] = useState('cliente');
+  const [currentUser, setCurrentUser] = useState('');
 
   const value = {
     entitySelected,
-    setEntitySelected
+    setEntitySelected,
+    currentUser, 
+    setCurrentUser
   };
 
   return (

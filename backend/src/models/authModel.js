@@ -12,7 +12,11 @@ const authUser = async (login) => {
         const [rows] = await connection.execute(query, [username]);
     
         if (rows.length === 0) {
-          throw new Error('Usuário não encontrado');
+          //throw new Error('Usuário não encontrado');
+          return ({
+            status: 'error',
+            message: 'Usuário não encontrado'
+          });
         }
     
         const user = rows[0];
@@ -23,10 +27,14 @@ const authUser = async (login) => {
         //const senhaCorrespondente = username === 'super' && password === 'super' ? true : false;
     
         if (!senhaCorrespondente) {
-          throw new Error('Senha incorreta');
+          //throw new Error('Senha incorreta');
+          return ({
+            status: 'error',
+            message: 'Senha incorreta'
+          });
         } else {
             // Cria um token JWT com um payload contendo as informações relevantes do usuário
-            const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
+            const token = jwt.sign({ username }, secretKey, { expiresIn: '20s' });
 
             // Retorna o token para o frontend
             console.log('Usuário autenticado com sucesso');
@@ -41,7 +49,7 @@ const authUser = async (login) => {
       } catch (error) {
         console.error('Erro na autenticação:', error);
       } finally {
-        connection.end(); // Fecha a conexão com o banco de dados
+        //connection.end(); // Fecha a conexão com o banco de dados
       }
 };
 

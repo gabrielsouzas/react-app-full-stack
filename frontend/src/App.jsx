@@ -1,18 +1,20 @@
 import React from 'react';
-import './App.css';
-//import Header from './components/Header/Header';
-//import Main from './components/Main/Main';
-import Provider from './context/Provider';
-import Login from './pages/Login/Login';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-/*<Header />
-      <Main /> */
+import './App.css';
+import Login from './pages/Login/Login';
+import Home from './pages/Home/Home';
+import Provider from './context/Provider';
 
 function App() {
-  
   return (
     <Provider>
-      <Login />
+      <Router>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/home" element={<Home />} />
+        </Routes>
+      </Router>
     </Provider>
   );
 }

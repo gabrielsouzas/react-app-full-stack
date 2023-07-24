@@ -11,6 +11,8 @@
 
 .sidebar button, .sidebar a {
     /*color: #2470DC;*/
+    border: none;
+    cursor: pointer;
     color: #6EA8FE;
     padding: 15px 0 0 30px;
     display: flex;
@@ -28,7 +30,7 @@
     background-color: transparent;
 }
 
-.sidebar button:hover {
+.sidebar button:hover, .sidebar a:hover {
     color: #2470DC;
     background-color: transparent;
 }

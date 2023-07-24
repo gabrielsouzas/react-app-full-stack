@@ -93,7 +93,7 @@ body {
     color: #fff;
     cursor: pointer;
 }
-.login-box a span {
-    position: absolute;
-    display: block;
+.login-box .login-error {
+    color: rgba(224, 81, 81, 0.705);
+    text-align: center;
 }

@@ -173,8 +173,8 @@ Siga os passos abaixo para iniciar o projeto do zero em sua máquina.
 Para criar o projeto React, execute o seguinte comando em seu terminal:
 
 ```bash
-npx create-react-app nome-do-projeto
-cd nome-do-projeto
+npx create-react-app react-app-full-stack
+cd react-app-full-stack
 ```
 
 ### 🔧 Configurando o back-end com Node.js

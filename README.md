@@ -186,11 +186,10 @@ Na pasta raiz do projeto, crie uma pasta para o back-end:
     cd backend
     ```
 
-* Inicie um novo projeto Node.js e crie um arquivo index.js para o servidor:
+* Inicie um novo projeto Node.js:
 
     ```bash
     npm init -y
-    touch index.js
     ```
 
 #### Instale as bibliotecas necessárias para o back-end:
@@ -218,3 +217,18 @@ Na pasta raiz do projeto, crie uma pasta para o back-end:
     ```bash
     npm install jsonwebtoken
     ```
+
+* Instalação do dotenv para gerenciar as varáveis de ambiente em Node.js:
+
+    ```bash
+    npm install dotenv
+    ```
+
+* Instalação do cors para lidar com a política de segurança em Node.js:
+
+    ```bash
+    npm install cors
+    ```
+
+
+### 🔧 Configurando o front-end

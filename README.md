@@ -2,6 +2,8 @@
 
 Projeto com o objetivo de desenvolver uma aplicação full-stack, utilizando React no front-end e Node.js no back-end.
 
+Como esse projeto tem como principal foco o estudo, um capíulo desse README será dedicado a criação do projeto do zero, com explicações essenciais.
+
 ## 🔧 Tecnologias Utilizadas 
 
 - Front-end: React

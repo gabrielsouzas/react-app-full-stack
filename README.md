@@ -249,3 +249,19 @@ Na pasta raiz do projeto, crie uma pasta para o back-end:
 
 
 ### 🔧 Configurando o front-end
+
+
+## 👥 Contribuição 
+
+Caso deseje contribuir para este projeto, siga os passos abaixo:
+
+1. Faça um fork do repositório;
+2. Crie um branch para a sua feature (git checkout -b feature/nome-da-feature);
+3. Faça as alterações desejadas;
+4. Commit suas mudanças (git commit -m 'Adicionando nova feature');
+4. Push o branch (git push origin feature/nome-da-feature);
+5. Abra um Pull Request;
+
+## 📄 Licença
+
+Este projeto está licenciado sob a Licença MIT License - veja o arquivo LICENSE.md para detalhes.

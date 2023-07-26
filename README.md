@@ -1,4 +1,4 @@
-# 👨‍💻 App React Full-Stack
+# <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" width="30" height="30" /> App React Full-Stack
 
 ![Versão](https://img.shields.io/badge/version-1.0.0-blue) ![Licença](https://img.shields.io/badge/license-MIT-green)
 
@@ -12,7 +12,6 @@ Como esse projeto tem como principal foco o estudo, um capíulo desse README ser
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![Javascript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 
 ### Back-end:
@@ -256,10 +255,23 @@ Na pasta raiz do projeto, crie uma pasta para o back-end:
 Caso deseje contribuir para este projeto, siga os passos abaixo:
 
 1. Faça um fork do repositório;
-2. Crie um branch para a sua feature (git checkout -b feature/nome-da-feature);
+
+2. Crie um branch para a sua feature :
+    ```
+    git checkout -b feature/nome-da-feature
+    ```
 3. Faça as alterações desejadas;
-4. Commit suas mudanças (git commit -m 'Adicionando nova feature');
-4. Push o branch (git push origin feature/nome-da-feature);
+
+4. Commit suas mudanças:
+    ```
+    git commit -m 'Adicionando nova feature'
+    ```
+
+4. Push o branch:
+    ```
+    git push origin feature/nome-da-feature
+    ```
+
 5. Abra um Pull Request;
 
 ## 📄 Licença

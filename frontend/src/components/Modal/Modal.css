@@ -63,6 +63,17 @@
     width: 100px;
     margin: 0;
     font-size: 1rem;
+
+    border-radius: 5px;
+    color: #fff;
+    background-color: #4B908F;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0px 8px 12px rgba(48, 94, 94, 0.4);
+  }
+
+  .modal-button-container button:hover {
+    background-color: #2b5858;
   }
   
   .close {

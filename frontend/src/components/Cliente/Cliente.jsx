@@ -94,7 +94,7 @@ function Cliente() {
   const handleClickBtnAlterar = (id) => {
     //setIdCliente((prevValue) => prevValue = id);
     setIdCliente(id);
-
+    
     handleOpenClienteModal();
   };
 

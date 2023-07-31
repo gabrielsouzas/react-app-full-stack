@@ -7,11 +7,11 @@ import { formatCPFInput, formatPhoneNumberInput } from '../../utils/format';
 
 import './ClienteModal.css';
 
-function ClienteModal(props) {
+function ClienteModal({isOpen, setIsOpen, idCliente, onResponse}) {
 
-  const { onResponse } = props;
+  //const { onResponse } = props;
 
-  const [idCliente, setIdCliente] = useState(0);
+  const [idClienteForm, setIdClienteForm] = useState(0);
   const [nome, setNome] = useState('');
   const [nomeAbreviado, setNomeAbreviado] = useState('');
   const [cpf, setCPF] = useState('');
@@ -23,7 +23,7 @@ function ClienteModal(props) {
   //const [cliente, setCliente] = useState([]);
 
   const cleanCliente = () => {
-    setIdCliente('');
+    setIdClienteForm('');
     setNome('');
     setNomeAbreviado('');
     setCPF('');
@@ -33,13 +33,13 @@ function ClienteModal(props) {
 
   const handleCloseModal = () => {
     cleanCliente();
-    props.setIsOpen(false);
+    setIsOpen(false);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    props.idCliente ? handleUpdateCliente() : handleInsertCliente();
+    idCliente ? handleUpdateCliente() : handleInsertCliente();
   };
 
   const handleInsertCliente = () => {
@@ -62,7 +62,7 @@ function ClienteModal(props) {
   const handleUpdateCliente = () => {
     setLoading(true);
     clienteService.updateCliente({
-      idcliente: idCliente,
+      idcliente: idClienteForm,
       nome,
       nomeabreviado: nomeAbreviado,
       cpf,
@@ -94,12 +94,12 @@ function ClienteModal(props) {
   };
 
   useEffect(() => {
-    props.idCliente
-      ? clienteService.fetchClienteById(props.idCliente).then((response) => {
+    idCliente
+      ? clienteService.fetchClienteById(idCliente).then((response) => {
         const [ data ] = response;
         const { idcliente, nome, nomeabreviado, cpf, telefone, ativo } = data;
         //setCliente(data);
-        setIdCliente(idcliente);
+        setIdClienteForm(idcliente);
         setNome(nome);
         setNomeAbreviado(nomeabreviado);
         setCPF(cpf);
@@ -107,11 +107,11 @@ function ClienteModal(props) {
         setAtivo(ativo);
       })
       : cleanCliente();
-  }, [props.idCliente]);
+  }, [idCliente, isOpen]);
 
   return (
     <div>
-      {props.isOpen && (
+      {isOpen && (
         <div className="cliente-modal">
           <div className="cliente-modal-content">
             <div className="cliente-modal-title">
@@ -128,8 +128,8 @@ function ClienteModal(props) {
                   id="idcliente"
                   name="idcliente"
                   placeholder="ID (Auto-incremento)"
-                  value={idCliente}
-                  onChange={(e) => setIdCliente(e.target.value)}
+                  value={idClienteForm}
+                  onChange={(e) => setIdClienteForm(e.target.value)}
                   disabled={true}
                 />
               </div>

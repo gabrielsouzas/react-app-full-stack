@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './Cliente.css';
 
 import { formatCpf, formatPhoneNumber } from '../../utils/format';
 import ClienteModal from '../ClienteModal/ClienteModal';
 import Modal from '../Modal/Modal';
+import AppContext from '../../context/AppContext';
 //import AppContext from "../../context/AppContext";
 
 // eslint-disable-next-line no-undef
@@ -12,6 +13,10 @@ const clienteService = require('../../services/clienteService');
 function Cliente() {
 
   //const { confirm, setConfirm } = useContext(AppContext)
+
+
+  // eslint-disable-next-line no-unused-vars
+  const { authToken } = useContext(AppContext);
 
   const [clientes, setClientes] = useState([]);
   const [clienteModalOpen, setClienteModalOpen] = useState(false);

@@ -10,6 +10,8 @@ import './Login.css';
 
 function Login() {
 
+  const { setAuthToken } = useContext(AppContext);
+
   // eslint-disable-next-line no-unused-vars
   const [token, setToken] = useState('');
   const [username, setUsername] = useState('');
@@ -43,7 +45,12 @@ function Login() {
           setError(data.message);
         } else {
           // Armazena o token JWT retornado pelo backend
-          setToken(data.token);
+          setToken(data);
+          setAuthToken(data);
+
+          // Armazenar o token no sessionStorage
+          sessionStorage.setItem('authToken', token);
+
           setIsAuthenticated(true);
           setCurrentUser(username);
           console.log('Usuário Logado');

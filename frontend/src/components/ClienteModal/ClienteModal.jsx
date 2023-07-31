@@ -9,8 +9,6 @@ import './ClienteModal.css';
 
 function ClienteModal({isOpen, setIsOpen, idCliente, onResponse}) {
 
-  //const { onResponse } = props;
-
   const [idClienteForm, setIdClienteForm] = useState(0);
   const [nome, setNome] = useState('');
   const [nomeAbreviado, setNomeAbreviado] = useState('');

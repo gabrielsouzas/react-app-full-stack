@@ -1,4 +1,4 @@
-import '../shim';
+/*import '../shim';
 import jwt from 'jsonwebtoken';
 
 export const isTokenExpired = (token) => {
@@ -16,3 +16,4 @@ export const isTokenExpired = (token) => {
     return true;
   }
 };
+*/

@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import Header from '../../components/Header/Header';
 import Main from '../../components/Main/Main';
 import AppContext from '../../context/AppContext';
-import { isTokenExpired } from '../../utils/auth';
+//import { isTokenExpired } from '../../utils/auth';
 
 function Home() {
 
@@ -21,9 +21,9 @@ function Home() {
 
   const validateToken = () => {
     if (authToken) {
-      if(isTokenExpired(authToken)) {
+      /*if(isTokenExpired(authToken)) {
         return false;
-      }
+      }*/
     } else {
       return false;
     }

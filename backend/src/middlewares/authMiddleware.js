@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const secretKey = process.env.SECRET_KEY;
 
 const verifyToken = (req, res, next) => {
+  
   const token = req.headers['authorization'];
 
   if (!token) {
@@ -14,6 +15,7 @@ const verifyToken = (req, res, next) => {
     }
 
     // Se o token é válido, você pode adicionar o usuário decodificado (ou informações relevantes) ao objeto 'req' para uso posterior
+    
     req.user = decoded;
 
     // Chame o próximo middleware ou o controlador de rota, se o token for válido
@@ -21,4 +23,6 @@ const verifyToken = (req, res, next) => {
   });
 };
 
-module.exports = verifyToken;
+module.exports = {
+  verifyToken,
+};

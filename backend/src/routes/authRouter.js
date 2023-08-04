@@ -8,5 +8,7 @@ const authController = require('../controllers/authController');
 
 router.post('/auth', authController.authUser);
 
+router.get('/auth/verify-token', authController.verifyToken);
+
 
 module.exports = router;

@@ -53,6 +53,42 @@ const authUser = async (login) => {
       }
 };
 
+const verifyToken = (req) => {
+  const token = req.headers['authorization'];
+  console.log(req);
+  try {
+    if (!token) {
+      return ({
+        status: '401',
+        message: 'Token not provided'
+      });
+      //return res.status(401).json({ error: 'Token not provided.' });
+    }
+  
+    jwt.verify(token, secretKey, (err, decoded) => {
+      if (err) {
+        return ({
+          status: '401',
+          message: 'Invalid token'
+        });
+        //return res.status(401).json({ error: 'Invalid token.' });
+      }
+  
+      // Se o token é válido, você pode adicionar o usuário decodificado (ou informações relevantes) ao objeto 'req' para uso posterior
+      req.user = decoded;
+  
+      return ({
+        status: '400',
+        message: 'Token validado'
+      });
+  
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
     authUser,
+    verifyToken,
 };

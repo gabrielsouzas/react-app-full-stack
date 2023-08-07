@@ -54,11 +54,12 @@ function Home() {
     console.log(authToken);
   };
 
-  const validateToken = async () => {
+  const validateToken = () => {
     if (authToken) {
-      const response = await isTokenValid();
-      console.log(response);
-      if(!isTokenValid()) {
+      //const response = await isTokenValid();
+      //console.log(response);
+      console.log(isTokenValid());
+      if(isTokenValid()) {
         return false;
       }
     } else {
@@ -69,6 +70,7 @@ function Home() {
 
   return (
     <>
+      {/*console.log(validateToken())*/}
       {(validateToken() && 
         <>
           <Header />

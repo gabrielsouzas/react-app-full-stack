@@ -26,11 +26,11 @@ const fetchVerifyToken = async () => {
   try {
     const response = await fetch('http://localhost:3333/auth/verify-token',  {
       headers: {
-        'Authorization': sessionStorage.getItem('authToken'),
+        'authorization': sessionStorage.getItem('authToken'),
       },
       //body: JSON.stringify(login),
     });
-    console.log(response);
+    //console.log(response);
     return response;
 
   } catch (error) {

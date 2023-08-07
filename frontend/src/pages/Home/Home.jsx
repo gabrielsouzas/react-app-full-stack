@@ -32,14 +32,18 @@ function Home() {
   const isTokenValid = async () => {
     try {
       const response =  await authService.fetchVerifyToken();
+      console.log(response);
       if (response.ok) {
         const data = await response.json();
-        if (data.status === 'error') {
-          console.log('Erro ao validar Token');
+        console.log(data);
+        if (data.status === '200') {
+          //console.log(data.status, data.message);
+          return true;
         } else {
-          console.log(data.status, data.message);
+          console.log('Erro ao validar Token', data.status, data.message);
+          return false;
         }
-      }
+      } else return false;
     } catch (error) {
       console.log('Erro ao tentar validar Token. Erro: ', error);
       return false;
@@ -50,8 +54,10 @@ function Home() {
     console.log(authToken);
   };
 
-  const validateToken = () => {
+  const validateToken = async () => {
     if (authToken) {
+      const response = await isTokenValid();
+      console.log(response);
       if(!isTokenValid()) {
         return false;
       }

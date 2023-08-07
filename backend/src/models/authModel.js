@@ -34,7 +34,7 @@ const authUser = async (login) => {
           });
         } else {
             // Cria um token JWT com um payload contendo as informações relevantes do usuário
-            const token = jwt.sign({ username }, secretKey, { expiresIn: '10s' });
+            const token = jwt.sign({ username }, secretKey, { expiresIn: '30s' });
 
             // Retorna o token para o frontend
             console.log('Usuário autenticado com sucesso');
@@ -54,35 +54,29 @@ const authUser = async (login) => {
 };
 
 const verifyToken = (req) => {
+  //const res = {};
   const token = req.headers['authorization'];
-  console.log(req);
+  
   try {
     if (!token) {
-      return ({
+      /*return ({
         status: '401',
         message: 'Token not provided'
-      });
-      //return res.status(401).json({ error: 'Token not provided.' });
+      });*/
+      //console.log('não acho token')
+      return false; //res.status(401).json({ error: 'Token not provided.' });
     }
-  
     jwt.verify(token, secretKey, (err, decoded) => {
       if (err) {
-        return ({
-          status: '401',
-          message: 'Invalid token'
-        });
-        //return res.status(401).json({ error: 'Invalid token.' });
+        return false; //res.status(401).json({ error: 'Invalid token.' });
       }
-  
+
       // Se o token é válido, você pode adicionar o usuário decodificado (ou informações relevantes) ao objeto 'req' para uso posterior
       req.user = decoded;
-  
-      return ({
-        status: '400',
-        message: 'Token validado'
-      });
-  
+
     });
+    //console.log()
+    return req.user;
   } catch (error) {
     console.log(error);
   }

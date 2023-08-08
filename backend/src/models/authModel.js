@@ -34,7 +34,7 @@ const authUser = async (login) => {
           });
         } else {
             // Cria um token JWT com um payload contendo as informações relevantes do usuário
-            const token = jwt.sign({ username }, secretKey, { expiresIn: '30s' });
+            const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
 
             // Retorna o token para o frontend
             console.log('Usuário autenticado com sucesso');

@@ -53,6 +53,7 @@ function Login() {
 
           setIsAuthenticated(true);
           setCurrentUser(username);
+          sessionStorage.setItem('currentUser', username);
           console.log('Usuário Logado');
           setError(null);
         }

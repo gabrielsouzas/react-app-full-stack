@@ -5,7 +5,9 @@ import AppContext from './AppContext';
 function Provider({children}) {
 
   const [entitySelected, setEntitySelected] = useState('cliente');
-  const [currentUser, setCurrentUser] = useState('');
+  const [currentUser, setCurrentUser] = useState(() => {
+    return sessionStorage.getItem('currentUser') || '';
+  });
   const [authToken, setAuthToken] = useState(
     () => {
       // Obter o token armazenado no sessionStorage, se existir

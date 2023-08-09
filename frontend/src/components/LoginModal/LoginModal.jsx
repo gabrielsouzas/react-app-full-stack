@@ -18,10 +18,7 @@ function Modal({ isOpen, setIsOpen }) {
     console.log('LogOut');
     // Remover Token da WhiteList
 
-    // Redirecionar para outra rota quando o contador chegar a zero
-    if (time === 0) {
-      return <Navigate to="/home" />;
-    }
+    setIsOpen(false);
 
   };
 
@@ -36,7 +33,6 @@ function Modal({ isOpen, setIsOpen }) {
         setTime(prevValue => prevValue - 1);
       } else {
         clearInterval(contTime);
-        handleLogout();
       }
     }, 1000);
 
@@ -45,7 +41,10 @@ function Modal({ isOpen, setIsOpen }) {
     };
   }, [time]);
 
-  
+  // Redirecionar para outra rota quando o contador chegar a zero
+  /*if (time === 0 || !isOpen) {
+    return <Navigate to="/home" />;
+  }*/
 
   return (
     <div>

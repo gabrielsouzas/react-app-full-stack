@@ -14,6 +14,7 @@ function Provider({children}) {
       return sessionStorage.getItem('authToken') || null;
     }
   );
+  const [tokenExpiration, setTokenExpiration] = useState(5000);
 
   useEffect(() => {
     // Atualizar o sessionStorage sempre que o token mudar
@@ -30,7 +31,9 @@ function Provider({children}) {
     currentUser, 
     setCurrentUser,
     authToken,
-    setAuthToken
+    setAuthToken,
+    tokenExpiration,
+    setTokenExpiration
   };
 
   return (

@@ -1,0 +1,92 @@
+.modal {
+    display: block;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    width: 400px;
+    background-color: #232c36;
+    border-radius: 5px;
+  }
+
+  .modal-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    background-color: #3f4c5a;
+    color: #acaeaf;
+    padding: 8px 20px;
+  }
+
+  .modal-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 10px;
+    padding: 0 20px;
+  }
+
+  .modal-content div {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    align-items: center;
+  }
+
+  .modal-text p {
+    width: 100%;
+    color: #acaeaf;
+    font-size: 1rem;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .modal-button-container {
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .modal-button-container button {
+    padding: 5px 17px;
+    width: 100px;
+    margin: 0;
+    font-size: 1rem;
+
+    border-radius: 5px;
+    color: #fff;
+    background-color: #4B908F;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0px 8px 12px rgba(48, 94, 94, 0.4);
+  }
+
+  .modal-button-container button:hover {
+    background-color: #2b5858;
+  }
+  
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }

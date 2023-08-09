@@ -7,7 +7,7 @@ import Header from '../../components/Header/Header';
 import Main from '../../components/Main/Main';
 import AppContext from '../../context/AppContext';
 import authService from '../../services/authService';
-import Loading from '../../components/Loading/Loading';
+import LoadingPage from '../../components/LoadingPage/LoadingPage';
 
 function Home() {
 
@@ -63,7 +63,7 @@ function Home() {
 
   return (
     <>
-      { (isLoading && <Loading className="loading-home" />) || (isTokenValid && 
+      { (isLoading && <LoadingPage />) || (isTokenValid && 
         <>
           <Header />
           <Main />

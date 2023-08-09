@@ -4,6 +4,7 @@ import { Navigate } from 'react-router-dom';
 import authService from '../../services/authService';
 import userService from '../../services/userService';
 import Loading from '../../components/Loading/Loading';
+import LoginModal from '../../components/LoginModal/LoginModal';
 import AppContext from '../../context/AppContext';
 
 import './Login.css';
@@ -22,6 +23,8 @@ function Login() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const [email, setEmail] = useState('super@gmail.com');
+
+  const [loginModalOpen, setLoginModalOpen] = useState(true);
 
   const { setCurrentUser } = useContext(AppContext);
 
@@ -55,6 +58,12 @@ function Login() {
           setCurrentUser(username);
           sessionStorage.setItem('currentUser', username);
           console.log('Usuário Logado');
+          
+          // eslint-disable-next-line no-unused-vars
+          /*const interval = setInterval(() => {
+            console.log('chamou');
+            setLoginModalOpen(true);
+          }, 5000);*/
           setError(null);
         }
         setLoading(false);
@@ -87,40 +96,46 @@ function Login() {
   }
 
   return (
-    <div className="login-container">
-      <div className="login-box">
-        <h2>LOGIN</h2>
-        <form onSubmit={handleSubmit}>
+    <>
+      <LoginModal
+        isOpen={loginModalOpen} 
+        setIsOpen={setLoginModalOpen}
+      />
+      <div className="login-container">
+        <div className="login-box">
+          <h2>LOGIN</h2>
+          <form onSubmit={handleSubmit}>
           
-          <div className="user-box">
-            <input 
-              type="text" 
-              name=""
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required 
-            />
-            <label>Usuário</label>
-          </div>
-          <div className="user-box">
-            <input
-              type="password" 
-              name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required 
-            />
-            <label>Senha</label>
-          </div>
-          {error && <span className="login-error">{error}</span>}
-          {
-            (loading && <button>Entrando <Loading /></button>) || 
+            <div className="user-box">
+              <input 
+                type="text" 
+                name=""
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required 
+              />
+              <label>Usuário</label>
+            </div>
+            <div className="user-box">
+              <input
+                type="password" 
+                name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required 
+              />
+              <label>Senha</label>
+            </div>
+            {error && <span className="login-error">{error}</span>}
+            {
+              (loading && <button>Entrando <Loading /></button>) || 
             <button type="submit">Entrar</button>
-          }
+            }
           
-        </form>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

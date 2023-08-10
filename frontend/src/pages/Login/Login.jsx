@@ -11,10 +11,10 @@ import './Login.css';
 
 function Login() {
 
-  const { setAuthToken } = useContext(AppContext);
+  const { authToken, setAuthToken, refreshToken, setRefreshToken, setCurrentUser } = useContext(AppContext);
 
   // eslint-disable-next-line no-unused-vars
-  const [token, setToken] = useState('');
+  //const [token, setToken] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -24,9 +24,7 @@ function Login() {
 
   const [email, setEmail] = useState('super@gmail.com');
 
-  const [loginModalOpen, setLoginModalOpen] = useState(true);
-
-  const { setCurrentUser } = useContext(AppContext);
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
 
   // Função para lidar com o envio do formulário de login
   const handleSubmit = async (e) => {
@@ -43,16 +41,19 @@ function Login() {
       // Verifica se a resposta foi bem-sucedida antes de processar o corpo
       if (response.ok) {
         const data = await response.json();
-        
+        //console.log(acessToken, refreshToken);
         if (data.status === 'error') {
           setError(data.message);
         } else {
           // Armazena o token JWT retornado pelo backend
-          setToken(data);
-          setAuthToken(data);
+          //const {accessToken, refreshToken} = data;
+          //setToken(accessToken);
+          setAuthToken(data.accessToken);
+          setRefreshToken(data.refreshToken);
 
           // Armazenar o token no sessionStorage
-          sessionStorage.setItem('authToken', token);
+          sessionStorage.setItem('authToken', authToken);
+          sessionStorage.setItem('refreshToken', refreshToken);
 
           setIsAuthenticated(true);
           setCurrentUser(username);

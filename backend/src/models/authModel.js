@@ -10,7 +10,7 @@ const authUser = async (login) => {
         // Busca o usuário pelo nome de usuário no banco de dados
         const query = 'SELECT * FROM users WHERE username = ?';
         const [rows] = await connection.execute(query, [username]);
-    
+        
         if (rows.length === 0) {
           //throw new Error('Usuário não encontrado');
           return ({
@@ -34,11 +34,17 @@ const authUser = async (login) => {
           });
         } else {
             // Cria um token JWT com um payload contendo as informações relevantes do usuário
-            const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
+            const accessToken = jwt.sign({ iduser: user.iduser, username }, secretKey, { expiresIn: '1h' });
+
+            // Gera refreshToken
+            const refreshToken = jwt.sign({ iduser: user.iduser, username }, secretKey, { expiresIn: '1d' });
+
+            //res.json({ accessToken, refreshToken });
 
             // Retorna o token para o frontend
             console.log('Usuário autenticado com sucesso');
-            return token;
+            
+            return {accessToken, refreshToken};
         } 
         /*else {
             res.status(401).json({ error: 'Credenciais inválidas' });
@@ -82,7 +88,37 @@ const verifyToken = (req) => {
   }
 };
 
+const refreshToken = async (req) => {
+  const { refreshToken } = req.body;
+
+  if (!refreshToken) {
+    throw new NotFoundException('Token do usuário não fornecido');
+  }
+
+  const iduser = jwt.decode(refreshToken)['iduser'];
+
+  // Busca o usuário pelo id de usuário no banco de dados
+  const query = 'SELECT * FROM users WHERE iduser = ?';
+  const [rows] = await connection.execute(query, [iduser]);
+
+  if (rows.length === 0) {
+    //throw new Error('Usuário não encontrado');
+    return ({
+      status: 'error',
+      message: 'Usuário não encontrado'
+    });
+  }
+
+  const user = rows[0];
+
+  // Gera um novo accessToken
+  const newAccessToken = jwt.sign({ iduser: user.iduser }, secretKey, { expiresIn: '1h' });
+
+  return { accessToken: newAccessToken };
+};
+
 module.exports = {
     authUser,
     verifyToken,
+    refreshToken,
 };

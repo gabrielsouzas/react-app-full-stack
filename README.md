@@ -1,10 +1,10 @@
-# <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" width="30" height="30" /> App React Full-Stack
+# <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" width="30" height="30" /> React App Full-Stack
 
 ![Versão](https://img.shields.io/badge/version-1.0.0-blue) ![Licença](https://img.shields.io/badge/license-MIT-green)
 
-<img src="./print_screens/login_page.png" alt="Print Screen" width=300> <img src="./print_screens/main_page.png" alt="Print Screen" width=300>
+<img src="./print_screens/login_page.png" alt="Print Screen" width=500> <img src="./print_screens/main_page.png" alt="Print Screen" width=500>
 
-Projeto com o objetivo de desenvolver uma aplicação full-stack, utilizando React no front-end e Node.js no back-end.
+>Projeto com o objetivo de desenvolver uma aplicação full-stack, utilizando React no front-end e Node.js no back-end.
 
 Como esse projeto tem como principal foco o estudo, um capíulo desse README será dedicado a criação do projeto do zero, com explicações essenciais.
 
@@ -23,7 +23,7 @@ Como esse projeto tem como principal foco o estudo, um capíulo desse README ser
 ### Banco de Dados:
 ![MySQL](https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white)
 
-### Editor: Visual Studio Code
+### Editor
 
 ![VSCode](https://img.shields.io/badge/VS%20Code-blue?style=for-the-badge&logo=visual-studio-code&logoColor=white)
 

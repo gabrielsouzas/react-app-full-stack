@@ -1,7 +1,9 @@
 import fetchWrapper from '../interceptors/fetchWrapper';
 
 export const fetchClientes = async () => {
-  const response = await fetchWrapper('/clientes');
+  const response = await fetchWrapper('/clientes', {
+    headers: { 'Content-Type': 'application/json' },
+  });
   const data = await response.json();
   return data;
 };

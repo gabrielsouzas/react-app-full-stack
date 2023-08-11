@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useContext } from 'react';
 import './Cliente.css';
 
@@ -75,13 +76,18 @@ function Cliente() {
   };
 
 
-  useEffect(() => {
+  useEffect(() => { Erro fetchWrapper
     const fetchClientesTable = async () => {
       try {
         const response = await fetchClientes();
-        setClientes(response);
-        setTotalPages(Math.ceil(response.length / itemsPerPage));
-        setCurrentData(response.slice(startIndex, endIndex));
+        if (!response.ok) {
+          throw new Error('Erro na requisição');
+        } else {
+          setClientes(response);
+          setTotalPages(Math.ceil(response.length / itemsPerPage));
+          setCurrentData(response.slice(startIndex, endIndex));
+        }
+        
       } catch (error) {
         console.log(error);
       }

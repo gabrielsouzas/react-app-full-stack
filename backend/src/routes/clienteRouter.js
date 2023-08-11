@@ -4,8 +4,9 @@ const router = express.Router();
 
 const clienteController = require('../controllers/clienteController');
 const clienteMiddleware = require('../middlewares/clienteMiddleware');
+const authMiddleware = require('../middlewares/authMiddleware');
 
-router.get('/clientes', clienteController.getAll);
+router.get('/clientes', authMiddleware.authenticateToken, clienteController.getAll);
 
 router.get('/cliente/:idcliente', clienteController.getById);
 

@@ -27,7 +27,7 @@ const verifyToken = async (request, response) => {
 
 const refreshToken = async (request, response) => {
     try {
-        const refreshToken = await authModel.refreshToken(request.body);
+        const refreshToken = await authModel.refreshToken(request);
         
         if (refreshToken) {
             return response.status(200).json({ status: 200, message: "Refresh Token validado" });

@@ -89,7 +89,7 @@ const verifyToken = (req) => {
 };
 
 const refreshToken = async (req) => {
-  const { refreshToken } = req.body;
+  const { refreshToken } = req.headers['authorization'];;
 
   if (!refreshToken) {
     throw new NotFoundException('Token do usuário não fornecido');

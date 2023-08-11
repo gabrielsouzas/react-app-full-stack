@@ -4,11 +4,11 @@ const baseUrl = 'http://localhost:3333';
 
 const fetchWrapper = async (url, options) => {
   // Verifica se há um token e adiciona um cabeçalho de autorização
-  const token = sessionStorage.getItem('accessToken');
+  const token = sessionStorage.getItem('authToken');
   if (token) {
     options.headers = {
       ...options.headers,
-      Authorization: `Bearer ${token}`,
+      'authorization': `Bearer ${token}`,
     };
   }
 
@@ -18,7 +18,7 @@ const fetchWrapper = async (url, options) => {
   if (response.status === 401) {
     const newToken = await refreshToken();
     if (newToken) {
-      options.headers.Authorization = `Bearer ${newToken}`;
+      options.headers.authorization = `Bearer ${newToken}`;
       return fetchWrapper(url, options);
     }
   }
@@ -29,14 +29,18 @@ const fetchWrapper = async (url, options) => {
 const refreshToken = async () => {
   try {
     const response = await fetch(`${baseUrl}/auth/refresh-token`,  {
-      body: JSON.stringify(sessionStorage.getItem('refreshToken')),
+      method: 'POST',
+      headers: {
+        'authorization': sessionStorage.getItem('refreshToken'),
+      },
+      //body: JSON.stringify(sessionStorage.getItem('refreshToken')),
     });
         
     const data = await response.json();
-    const newToken = data.accessToken;
+    const newToken = data.authToken;
 
     // Atualize o token no armazenamento
-    sessionStorage.setItem('accessToken', newToken);
+    sessionStorage.setItem('authToken', newToken);
 
     return newToken;
     

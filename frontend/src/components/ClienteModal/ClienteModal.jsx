@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import propTypes from 'prop-types';
-import clienteService from '../../services/clienteService';
 import Loading from '../Loading/Loading';
+
+import { insertCliente, updateCliente, fetchClienteById } from '../../services/clienteService';
 
 import { formatCPFInput, formatPhoneNumberInput } from '../../utils/format';
 
@@ -42,7 +43,7 @@ function ClienteModal({isOpen, setIsOpen, idCliente, onResponse}) {
 
   const handleInsertCliente = () => {
     setLoading(true);
-    clienteService.insertCliente({
+    insertCliente({
       nome,
       nomeabreviado: nomeAbreviado,
       cpf,
@@ -59,7 +60,7 @@ function ClienteModal({isOpen, setIsOpen, idCliente, onResponse}) {
 
   const handleUpdateCliente = () => {
     setLoading(true);
-    clienteService.updateCliente({
+    updateCliente({
       idcliente: idClienteForm,
       nome,
       nomeabreviado: nomeAbreviado,
@@ -93,7 +94,7 @@ function ClienteModal({isOpen, setIsOpen, idCliente, onResponse}) {
 
   useEffect(() => {
     idCliente
-      ? clienteService.fetchClienteById(idCliente).then((response) => {
+      ? fetchClienteById(idCliente).then((response) => {
         const [ data ] = response;
         const { idcliente, nome, nomeabreviado, cpf, telefone, ativo } = data;
         //setCliente(data);

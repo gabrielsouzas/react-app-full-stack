@@ -6,7 +6,7 @@ import './Home.css';
 import Header from '../../components/Header/Header';
 import Main from '../../components/Main/Main';
 import AppContext from '../../context/AppContext';
-import authService from '../../services/authService';
+import { fetchVerifyToken } from '../../services/authService';
 import LoadingPage from '../../components/LoadingPage/LoadingPage';
 
 function Home() {
@@ -41,7 +41,7 @@ function Home() {
 
   const validateToken = async () => {
     try {
-      const response =  await authService.fetchVerifyToken();
+      const response =  await fetchVerifyToken();
       if (response.ok) {
         const {status , message} = await response.json();
         if (status == 200) {

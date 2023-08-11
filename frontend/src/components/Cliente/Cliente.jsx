@@ -8,7 +8,9 @@ import AppContext from '../../context/AppContext';
 //import AppContext from "../../context/AppContext";
 
 // eslint-disable-next-line no-undef
-const clienteService = require('../../services/clienteService');
+//const clienteService = require('../../services/clienteService');
+
+import { fetchClientes, deleteCliente } from '../../services/clienteService';
 
 function Cliente() {
 
@@ -74,9 +76,9 @@ function Cliente() {
 
 
   useEffect(() => {
-    const fetchClientes = async () => {
+    const fetchClientesTable = async () => {
       try {
-        const response = await clienteService.fetchClientes();
+        const response = await fetchClientes();
         setClientes(response);
         setTotalPages(Math.ceil(response.length / itemsPerPage));
         setCurrentData(response.slice(startIndex, endIndex));
@@ -85,7 +87,7 @@ function Cliente() {
       }
     };
 
-    fetchClientes();
+    fetchClientesTable();
   }, [endIndex, startIndex]); //clientes, endIndex, startIndex
 
   const handleOpenClienteModal = () => {
@@ -127,7 +129,7 @@ function Cliente() {
     handleCloseModal();
     // Fechamento Modal
     
-    modalContent.delete && choice && clienteService.deleteCliente(idCliente).then(
+    modalContent.delete && choice && deleteCliente(idCliente).then(
       fetchClientesChanged
     );
 
@@ -137,7 +139,7 @@ function Cliente() {
 
   const fetchClientesChanged = async () => {
     try {
-      const response = await clienteService.fetchClientes();
+      const response = await fetchClientes();
       setClientes(response);
       setTotalPages(Math.ceil(response.length / itemsPerPage));
       setCurrentData(response.slice(startIndex, endIndex));

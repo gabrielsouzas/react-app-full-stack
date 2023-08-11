@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Navigate } from 'react-router-dom';
 
-import authService from '../../services/authService';
+import {authUser} from '../../services/authService';
 import userService from '../../services/userService';
 import Loading from '../../components/Loading/Loading';
 import LoginModal from '../../components/LoginModal/LoginModal';
@@ -33,7 +33,7 @@ function Login() {
 
     try {
       // Envia as credenciais de login para o backend usando fetch
-      const response = await authService.authUser({
+      const response = await authUser({
         username,
         password,
       });

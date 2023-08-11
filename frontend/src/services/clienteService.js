@@ -1,18 +1,20 @@
-const fetchClientes = async () => {
-  const response = await fetch('http://localhost:3333/clientes');
+import fetchWrapper from '../interceptors/fetchWrapper';
+
+export const fetchClientes = async () => {
+  const response = await fetchWrapper('/clientes');
   const data = await response.json();
   return data;
 };
 
-const fetchClienteById = async (idcliente) => {
-  const response = await fetch(`http://localhost:3333/cliente/${idcliente}`);
+export const fetchClienteById = async (idcliente) => {
+  const response = await fetchWrapper(`/cliente/${idcliente}`);
   const data = await response.json();
   return data;
 };
 
-const insertCliente = async (cliente) => {
+export const insertCliente = async (cliente) => {
 
-  const response = await fetch('http://localhost:3333/clientes', {
+  const response = await fetchWrapper('/clientes', {
     method: 'post',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(cliente),
@@ -21,9 +23,9 @@ const insertCliente = async (cliente) => {
   return response;
 };
 
-const updateCliente = async (cliente) => {
+export const updateCliente = async (cliente) => {
   const { idcliente } = cliente;
-  const response = await fetch(`http://localhost:3333/clientes/${idcliente}`, {
+  const response = await fetchWrapper(`/clientes/${idcliente}`, {
     method: 'put',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(cliente),
@@ -31,18 +33,9 @@ const updateCliente = async (cliente) => {
   return response;
 };
 
-const deleteCliente = async (idcliente) => {
-  const response = await fetch(`http://localhost:3333/clientes/${idcliente}`, {
+export const deleteCliente = async (idcliente) => {
+  const response = await fetchWrapper(`/clientes/${idcliente}`, {
     method: 'delete',
   });
   return response;
-};
-
-// eslint-disable-next-line no-undef
-module.exports = {
-  fetchClientes,
-  fetchClienteById,
-  insertCliente,
-  updateCliente,
-  deleteCliente,
 };

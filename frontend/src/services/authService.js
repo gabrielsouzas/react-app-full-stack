@@ -1,8 +1,10 @@
-const authUser = async (login) => {
+import fetchWrapper from '../interceptors/fetchWrapper';
+
+export const authUser = async (login) => {
 
   try {
     // Envia as credenciais de login para o backend usando fetch
-    const response = await fetch('http://localhost:3333/auth', {
+    const response = await fetchWrapper('/auth', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -18,7 +20,7 @@ const authUser = async (login) => {
   }
 };
 
-const fetchVerifyToken = async () => {
+export const fetchVerifyToken = async () => {
   try {
     const response = await fetch('http://localhost:3333/auth/verify-token',  {
       headers: {
@@ -35,7 +37,7 @@ const fetchVerifyToken = async () => {
   }
 };
 
-const fetchRefreshToken = async () => {
+export const fetchRefreshToken = async () => {
   try {
     const response = await fetch('http://localhost:3333/auth/refresh-token',  {
       body: JSON.stringify(sessionStorage.getItem('refreshToken')),
@@ -49,8 +51,8 @@ const fetchRefreshToken = async () => {
 };
 
 // eslint-disable-next-line no-undef
-module.exports = {
+/*module.exports = {
   authUser,
   fetchVerifyToken,
   fetchRefreshToken,
-};
+};*/

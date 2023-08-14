@@ -76,7 +76,7 @@ function Cliente() {
   };
 
 
-  useEffect(() => { Erro fetchWrapper
+  useEffect(() => {
     const fetchClientesTable = async () => {
       try {
         const response = await fetchClientes();

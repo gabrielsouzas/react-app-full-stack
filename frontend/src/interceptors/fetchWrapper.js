@@ -15,17 +15,18 @@ const fetchWrapper = async (url, options) => {
   const response = await fetch(`${baseUrl}${url}`, options);
 
   // Verifica a resposta e atualiza o token, se necessário
-  if (response.status === 401) {
+  /*if (response.status === 401) {
     const newToken = await refreshToken();
     if (newToken) {
       options.headers.authorization = `Bearer ${newToken}`;
       return fetchWrapper(url, options);
     }
-  }
+  }*/
 
   return response;
 };
 
+// eslint-disable-next-line no-unused-vars
 const refreshToken = async () => {
   try {
     const response = await fetch(`${baseUrl}/auth/refresh-token`,  {

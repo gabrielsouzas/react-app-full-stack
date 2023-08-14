@@ -8,7 +8,7 @@ const authController = require('../controllers/authController');
 
 router.post('/auth', authController.authUser);
 router.get('/auth/verify-token', authController.verifyToken);
-router.get('/auth/refresh-token', authController.refreshToken);
+router.post('/auth/refresh-token', authController.refreshToken);
 
 
 module.exports = router;

@@ -8,20 +8,20 @@ const fetchWrapper = async (url, options) => {
   if (token) {
     options.headers = {
       ...options.headers,
-      'authorization': `Bearer ${token}`,
+      'authorization': `${token}`,
     };
   }
 
   const response = await fetch(`${baseUrl}${url}`, options);
-
+  //console.log(response);
   // Verifica a resposta e atualiza o token, se necessário
-  /*if (response.status === 401) {
+  if (response.status === 401) {
     const newToken = await refreshToken();
     if (newToken) {
-      options.headers.authorization = `Bearer ${newToken}`;
+      options.headers.authorization = `${newToken}`;
       return fetchWrapper(url, options);
     }
-  }*/
+  }
 
   return response;
 };
@@ -36,9 +36,10 @@ const refreshToken = async () => {
       },
       //body: JSON.stringify(sessionStorage.getItem('refreshToken')),
     });
-        
-    const data = await response.json();
-    const newToken = data.authToken;
+    
+    const { refreshToken } = await response.json();
+    
+    const newToken = refreshToken.accessToken;
 
     // Atualize o token no armazenamento
     sessionStorage.setItem('authToken', newToken);

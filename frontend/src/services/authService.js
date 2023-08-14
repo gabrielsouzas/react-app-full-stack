@@ -22,13 +22,18 @@ export const authUser = async (login) => {
 
 export const fetchVerifyToken = async () => {
   try {
-    const response = await fetch('http://localhost:3333/auth/verify-token',  {
+    /*const response = await fetch('http://localhost:3333/auth/verify-token',  {
       headers: {
         'authorization': sessionStorage.getItem('authToken'),
       },
       //body: JSON.stringify(login),
-    });
+    });*/
     //console.log(response);
+
+    const response = await fetchWrapper('/auth/verify-token', {
+      headers: { 'Content-Type': 'application/json' },
+    });
+    
     return response;
 
   } catch (error) {

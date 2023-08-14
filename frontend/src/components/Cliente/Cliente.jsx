@@ -80,13 +80,11 @@ function Cliente() {
     const fetchClientesTable = async () => {
       try {
         const response = await fetchClientes();
-        if (!response.ok) {
-          throw new Error('Erro na requisição');
-        } else {
-          setClientes(response);
-          setTotalPages(Math.ceil(response.length / itemsPerPage));
-          setCurrentData(response.slice(startIndex, endIndex));
-        }
+        
+        setClientes(response);
+        setTotalPages(Math.ceil(response.length / itemsPerPage));
+        setCurrentData(response.slice(startIndex, endIndex));
+        
         
       } catch (error) {
         console.log(error);

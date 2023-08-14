@@ -30,7 +30,7 @@ const refreshToken = async (request, response) => {
         const refreshToken = await authModel.refreshToken(request);
         
         if (refreshToken) {
-            return response.status(200).json({ status: 200, message: "Refresh Token validado" });
+            return response.status(200).json({ status: 200, message: "Refresh Token validado", refreshToken });
         } else {
             return response.status(401).json({ status: 401, message: "Refresh Token inválido" });
         }

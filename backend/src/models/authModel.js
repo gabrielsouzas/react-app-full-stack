@@ -89,14 +89,14 @@ const verifyToken = (req) => {
 };
 
 const refreshToken = async (req) => {
-  const { refreshToken } = req.headers['authorization'];;
-
+  const refreshToken = req.headers['authorization'];;
+  
   if (!refreshToken) {
     throw new NotFoundException('Token do usuário não fornecido');
   }
 
   const iduser = jwt.decode(refreshToken)['iduser'];
-
+  
   // Busca o usuário pelo id de usuário no banco de dados
   const query = 'SELECT * FROM users WHERE iduser = ?';
   const [rows] = await connection.execute(query, [iduser]);

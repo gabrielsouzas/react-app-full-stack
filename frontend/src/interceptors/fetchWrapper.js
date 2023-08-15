@@ -3,17 +3,36 @@
 const baseUrl = 'http://localhost:3333';
 
 const fetchWrapper = async (url, options) => {
+  console.log(options);
   // Verifica se há um token e adiciona um cabeçalho de autorização
   const token = sessionStorage.getItem('authToken');
+  
   if (token) {
-    options.headers = {
-      ...options.headers,
-      'authorization': `${token}`,
-    };
+    if (options)  {
+      if ('headers' in options) {
+        options.headers = { aqui, o options não está carregando o método delete
+          ...options.headers,
+          'authorization': `${token}`,
+        };
+      } else {
+        options = {
+          'headers': {
+            'authorization': `${token}`,
+          }
+        };
+      }
+      
+    } else {
+      options = {
+        ...options,
+        'headers': {
+          'authorization': `${token}`,
+        }
+      };
+    }
   }
-
+  
   const response = await fetch(`${baseUrl}${url}`, options);
-  //console.log(response);
   // Verifica a resposta e atualiza o token, se necessário
   if (response.status === 401) {
     const newToken = await refreshToken();

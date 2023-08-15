@@ -2,7 +2,7 @@
 
 ![Versão](https://img.shields.io/badge/version-1.0.0-blue) ![Licença](https://img.shields.io/badge/license-MIT-green)
 
-<img src="./print_screens/login_page.png" alt="Print Screen" width=500> <img src="./print_screens/main_page.png" alt="Print Screen" width=500>
+<img src="./print_screens/login_page.png" alt="Print Screen" width=450> <img src="./print_screens/main_page.png" alt="Print Screen" width=450>
 
 >Projeto com o objetivo de desenvolver uma aplicação full-stack, utilizando React no front-end e Node.js no back-end.
 
@@ -15,6 +15,7 @@ Como esse projeto tem como principal foco o estudo, um capíulo desse README ser
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![Javascript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![ESLINT](https://img.shields.io/badge/eslint-3A33D1?style=for-the-badge&logo=eslint&logoColor=white)
 
 ### Back-end:
 ![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
@@ -29,7 +30,7 @@ Como esse projeto tem como principal foco o estudo, um capíulo desse README ser
 
 ## 📚 Descrição do Projeto
 
-O principal objetivo deste projeto é estudar o desenvolvimento de uma aplicação full-stack para o mundo real. O exemplo que ele se baseia é de um ERP, que é um sistema de informação que interliga todos os dados e processos de uma organização em um único sistema.
+O principal objetivo deste projeto é estudar o desenvolvimento de uma aplicação full-stack para o mundo real. O exemplo que ele se baseia é de um ERP, que é um sistema de informação que interliga todos os dados e processos de uma organização em um único sistema. Como seu foco é o estudo, este repositório está e sempre estará em desenvolvimento.
 
 ## Estrutura do projeto
 

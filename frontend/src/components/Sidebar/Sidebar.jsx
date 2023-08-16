@@ -25,8 +25,9 @@ function Sidebar() {
 
 
   const handleLogOut = () => {
-    // Inserir logout do token aqui
-    console.log('teste');
+    sessionStorage.removeItem('authToken');
+    sessionStorage.removeItem('refreshToken');
+    sessionStorage.removeItem('currentUser');
   };
 
   return (

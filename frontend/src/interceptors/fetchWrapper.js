@@ -3,28 +3,26 @@
 const baseUrl = 'http://localhost:3333';
 
 const fetchWrapper = async (url, options) => {
-  console.log(options);
   // Verifica se há um token e adiciona um cabeçalho de autorização
   const token = sessionStorage.getItem('authToken');
   
   if (token) {
     if (options)  {
       if ('headers' in options) {
-        options.headers = { aqui, o options não está carregando o método delete
+        options.headers = {
           ...options.headers,
           'authorization': `${token}`,
         };
       } else {
         options = {
+          ...options,
           'headers': {
             'authorization': `${token}`,
           }
         };
       }
-      
     } else {
       options = {
-        ...options,
         'headers': {
           'authorization': `${token}`,
         }

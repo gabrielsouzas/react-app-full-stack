@@ -8,9 +8,12 @@ import LoginModal from '../../components/LoginModal/LoginModal';
 import AppContext from '../../context/AppContext';
 
 import './Login.css';
+// eslint-disable-next-line no-unused-vars
+import { insertWhitelist } from '../../services/whitelistService';
 
 function Login() {
 
+  // eslint-disable-next-line no-unused-vars
   const { authToken, setAuthToken, refreshToken, setRefreshToken, setCurrentUser } = useContext(AppContext);
 
   // eslint-disable-next-line no-unused-vars
@@ -52,14 +55,24 @@ function Login() {
           setRefreshToken(data.refreshToken);
 
           // Armazenar o token no sessionStorage
-          sessionStorage.setItem('authToken', authToken);
-          sessionStorage.setItem('refreshToken', refreshToken);
+          sessionStorage.setItem('authToken', data.accessToken);
+          sessionStorage.setItem('refreshToken', data.refreshToken);
 
           setIsAuthenticated(true);
           setCurrentUser(username);
           sessionStorage.setItem('currentUser', username);
-          console.log('Usuário Logado');
-          
+          //console.log('Usuário Logado');
+
+          // Inserir Token na whitelist
+          const insertedWhitelist = await insertWhitelist({authToken: data.accessToken});
+          if (insertedWhitelist.ok) {
+            const message = await insertedWhitelist.json();
+            if (message.status === 'error') {
+              console.log('Erro ao inserir Token na Whitelist. Consulte o Administrador.');
+            }
+          } else {
+            console.log('Erro ao inserir Token na Whitelist. Consulte o Administrador.');
+          }
           // eslint-disable-next-line no-unused-vars
           /*const interval = setInterval(() => {
             console.log('chamou');

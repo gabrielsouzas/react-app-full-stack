@@ -21,9 +21,18 @@ const createWhitelist = async (request, response) => {
 };
 
 const deleteWhitelist = async (request, response) => {
-    const { token } = request.params;
-    await whitelistModel.deleteWhitelist(token);
-    return response.status(200).json();
+    try {
+        const { token } = request.params;
+        const whitelistRemoved = await whitelistModel.deleteWhitelist(token);
+        
+        if (whitelistRemoved) {
+            return response.status(200).json({ status: 200, message: "Token removido da WhiteList" });
+        } else {
+            return response.status(401).json({ status: 401, message: "Token não removido da WhiteList" });
+        }
+    } catch (error) {
+        return response.status(500).json({ status: 500, message: "Erro ao remover token da WhiteList" });
+    }
 };
 
 module.exports = {

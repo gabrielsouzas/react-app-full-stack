@@ -11,6 +11,7 @@ import { AiOutlinePlusCircle } from 'react-icons/ai';
 
 import './Sidebar.css';
 import { Link } from 'react-router-dom';
+import { deleteWhitelist } from '../../services/whitelistService';
 
 function Sidebar() {
 
@@ -25,9 +26,27 @@ function Sidebar() {
 
 
   const handleLogOut = () => {
+    // Remover o Token da WhiteList
+    removeTokenWhiteList();
+
+    // Remover o Token da sessão
     sessionStorage.removeItem('authToken');
     sessionStorage.removeItem('refreshToken');
     sessionStorage.removeItem('currentUser');
+  };
+
+  const removeTokenWhiteList = async () => {
+    try {
+      const response = await deleteWhitelist(sessionStorage.getItem('authToken'));
+      if (response.ok) {
+        const data = await response.json();
+        if (data.status != 200) {
+          console.log(`Erro ao remover Token da WhiteList. Erro: ${data.message}`);
+        }
+      } else console.log(`Erro ao remover Token da WhiteList. Erro: ${response}`);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

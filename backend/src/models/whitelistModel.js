@@ -1,7 +1,7 @@
 const connection = require('./connection');
 
 const getWhitelist = async (token) => {
-    const query = 'SELECT * FROM whitelist WHERE token = ?';
+    const query = 'SELECT COUNT(*) AS count FROM whitelist WHERE token = ?';
     const [whitelist] = await connection.execute(query, [token]);
     return whitelist;
 };

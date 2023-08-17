@@ -5,9 +5,11 @@ const router = express.Router();
 const clienteController = require('../controllers/clienteController');
 const clienteMiddleware = require('../middlewares/clienteMiddleware');
 const authMiddleware = require('../middlewares/authMiddleware');
+const whitelistMiddleware = require('../middlewares/whitelistMiddleware');
 
 router.get('/clientes', 
-    authMiddleware.authenticateToken, 
+    authMiddleware.authenticateToken,
+    whitelistMiddleware.checkTokenInWhitelist,
     clienteController.getAll);
 
 router.get('/cliente/:idcliente', 

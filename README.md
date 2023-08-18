@@ -32,6 +32,18 @@ Como esse projeto tem como principal foco o estudo, um capíulo desse README ser
 
 O principal objetivo deste projeto é estudar o desenvolvimento de uma aplicação full-stack para o mundo real. O exemplo que ele se baseia é de um ERP, que é um sistema de informação que interliga todos os dados e processos de uma organização em um único sistema. Como seu foco é o estudo, este repositório está e sempre estará em desenvolvimento.
 
+## 🎯 Funções/Desenvolvimento
+
+- [X] Estrutura robusta para escalabilidade;
+- [X] Uso de variáveis de ambiente;
+- [X] Controle de rotas;
+- [X] Uso de middlewares para verificações;
+- [X] Autenticação com Tokens;
+- [X] Verifcação de tokens com uma white list;
+- [X] Utilização de interceptors nas requisições (verificação dos tokens antes de cada requisição);
+- [X] Uso do React Hook useContext para manipulação de estados em toda a aplicação;
+- [ ] Aplicação do Clean Code;
+
 ## Estrutura do projeto
 
 ```
@@ -55,6 +67,8 @@ O principal objetivo deste projeto é estudar o desenvolvimento de uma aplicaç�
     |    ├── public/
     |    ├── src/
     |    │   ├── components/
+    |    │   ├── context/
+    |    │   ├── interceptors/
     |    │   ├── pages/
     |    │   ├── services/
     |    │   ├── utils/

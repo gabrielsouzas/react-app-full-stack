@@ -12,8 +12,7 @@ const checkTokenInWhitelist = async (req, res, next) => {
   try {
       const result = await getWhitelist(token);
       const isTokenValid = result.length > 0 && result[0].count > 0;
-      console.log(result[0].count);
-      console.log(isTokenValid);
+      
       if (isTokenValid) {
           next(); // Token válido
       } else {

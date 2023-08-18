@@ -13,22 +13,26 @@ router.get('/clientes',
     clienteController.getAll);
 
 router.get('/cliente/:idcliente', 
-    authMiddleware.authenticateToken, 
+    authMiddleware.authenticateToken,
+    whitelistMiddleware.checkTokenInWhitelist, 
     clienteController.getById);
 
 router.post('/clientes', 
     authMiddleware.authenticateToken, 
     clienteMiddleware.validateFieldNome, 
+    whitelistMiddleware.checkTokenInWhitelist,
     clienteController.createCliente);
 
 router.put('/clientes/:idcliente',
     authMiddleware.authenticateToken,
+    whitelistMiddleware.checkTokenInWhitelist,
     clienteMiddleware.validateFieldNome,
     clienteController.updateCliente,
 );
 
 router.delete('/clientes/:idcliente',
     authMiddleware.authenticateToken, 
+    whitelistMiddleware.checkTokenInWhitelist,
     clienteController.deleteCliente);
 
 module.exports = router;

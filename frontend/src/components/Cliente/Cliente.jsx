@@ -1,25 +1,13 @@
-/* eslint-disable no-unused-vars */
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Cliente.css';
 
 import { formatCpf, formatPhoneNumber } from '../../utils/format';
 import ClienteModal from '../ClienteModal/ClienteModal';
 import Modal from '../Modal/Modal';
-import AppContext from '../../context/AppContext';
-//import AppContext from "../../context/AppContext";
-
-// eslint-disable-next-line no-undef
-//const clienteService = require('../../services/clienteService');
 
 import { fetchClientes, deleteCliente } from '../../services/clienteService';
 
 function Cliente() {
-
-  //const { confirm, setConfirm } = useContext(AppContext)
-
-
-  // eslint-disable-next-line no-unused-vars
-  const { authToken } = useContext(AppContext);
 
   const [clientes, setClientes] = useState([]);
   const [clienteModalOpen, setClienteModalOpen] = useState(false);
@@ -27,7 +15,6 @@ function Cliente() {
 
   // Modal useStates
   const [modalOpen, setModalOpen] = useState(false);
-  //const [userChoice, setUserChoice] = useState(false);
   const [modalContent, setModalContent] = useState({
     title: 'Excluir Cliente',
     text: 'Tem certeza que quer excluir esse Cliente?',
@@ -46,7 +33,6 @@ function Cliente() {
 
   
   const [searchTerm, setSearchTerm] = useState('');
-  //const [filteredData, setFilteredData] = useState(clientes);
 
   const normalizeString = (str) => {
     return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
@@ -80,11 +66,22 @@ function Cliente() {
     const fetchClientesTable = async () => {
       try {
         const response = await fetchClientes();
-        
-        setClientes(response);
-        setTotalPages(Math.ceil(response.length / itemsPerPage));
-        setCurrentData(response.slice(startIndex, endIndex));
-        
+        if(response) {
+          if('error' in response) {
+            console.log(response.error);
+          } else {
+            if(response.status === 200 && 'clientes' in response) {
+              const { clientes } = response;
+              setClientes(clientes);
+              setTotalPages(Math.ceil(clientes.length / itemsPerPage));
+              setCurrentData(clientes.slice(startIndex, endIndex));
+            } else {
+              console.log('Erro: Parâmetro clientes não encontrado na requisição');
+            }
+          }
+        } else {
+          console.log('Erro: Sem resposta da requisição.');
+        }        
         
       } catch (error) {
         console.log(error);
@@ -103,14 +100,12 @@ function Cliente() {
   };
 
   const handleClickBtnAlterar = (id) => {
-    //setIdCliente((prevValue) => prevValue = id);
     setIdCliente(id);
     
     handleOpenClienteModal();
   };
 
   const handleClickBtnExcluir = async (id) => {
-    //setIdCliente((prevValue) => prevValue = id);
     setIdCliente(id);
 
     setModalContent({
@@ -129,9 +124,8 @@ function Cliente() {
   };
 
   const handleUserChoice = (choice) => {
-    //setUserChoice((prevValue) => prevValue = choice);
-    handleCloseModal();
     // Fechamento Modal
+    handleCloseModal();
     
     modalContent.delete && choice && deleteCliente(idCliente).then(
       fetchClientesChanged
@@ -153,11 +147,7 @@ function Cliente() {
   };
 
   const handleResponse = (response) => {
-    //setUserChoice((prevValue) => prevValue = response);
-    //handleCloseModal();
-    // Fechamento Modal
-    
-    
+    // Formação modal
     const modalText = response.status === 201 ? 'Cliente inserido com sucesso!' :
       response.status === 204 ? 'Cliente alterado com sucesso!' :
         response.status === 200 ? 'Cliente excluído com sucesso!' :
@@ -175,7 +165,6 @@ function Cliente() {
   };
 
   const handleClickNovo = () => {
-    //setIdCliente((prevValue) => prevValue = null);
     setIdCliente(null);
     handleOpenClienteModal();
   };
@@ -246,7 +235,6 @@ function Cliente() {
             </thead>
             <tbody>
               {
-                //typeof clientes !== "undefined" && clientes.map((value) => {
                 typeof currentData !== 'undefined' && currentData.map((value) => {
                   return (
                     <tr key={value.idcliente}>

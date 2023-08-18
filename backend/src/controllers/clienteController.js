@@ -1,8 +1,17 @@
 const clienteModel = require('../models/clienteModel');
 
 const getAll = async (request, response) => {
-    const cliente = await clienteModel.getAll();
-    return response.status(200).json(cliente);
+    try {
+        const clientes = await clienteModel.getAll();
+        
+        if (clientes) {
+            return response.status(200).json({clientes, status: 200, message: 'Dados buscados com sucesso'});
+        } else {
+            return response.status(404).json({ status: 404, error: 'Dados não encontrados' , message: 'Os dados solicitados não foram encontrados no banco de dados' });
+        }
+    } catch (error) {
+        return response.status(500).json({ error: 'Erro interno do servidor', message: "Erro ao buscar dados no servidor" });
+    }
 };
 
 const getById = async (request, response) => {

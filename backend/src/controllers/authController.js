@@ -1,17 +1,11 @@
 const authModel = require('../models/authModel');
 
 const authUser = async (request, response) => {
-    //const { acessToken, refreshToken } = await authModel.authUser(request.body);
-    //return response.json({ acessToken, refreshToken });
-
     const tokens = await authModel.authUser(request.body);
     return response.json(tokens);
 };
 
 const verifyToken = async (request, response) => {
-    //const data = await authModel.verifyToken(request);
-    //return response.json(data);
-
     try {
         const tokenValid = await authModel.verifyToken(request);
         

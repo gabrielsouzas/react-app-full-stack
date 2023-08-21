@@ -95,15 +95,27 @@ function ClienteModal({isOpen, setIsOpen, idCliente, onResponse}) {
   useEffect(() => {
     idCliente
       ? fetchClienteById(idCliente).then((response) => {
-        const [ data ] = response;
-        const { idcliente, nome, nomeabreviado, cpf, telefone, ativo } = data;
-        //setCliente(data);
-        setIdClienteForm(idcliente);
-        setNome(nome);
-        setNomeAbreviado(nomeabreviado);
-        setCPF(cpf);
-        setTelefone(telefone);
-        setAtivo(ativo);
+        if (response) {
+          if (response.status == 200) {
+            const { cliente } = response;
+            if (cliente.length > 0) {
+              const { idcliente, nome, nomeabreviado, cpf, telefone, ativo } = cliente[0];
+              //setCliente(data);
+              setIdClienteForm(idcliente);
+              setNome(nome);
+              setNomeAbreviado(nomeabreviado);
+              setCPF(cpf);
+              setTelefone(telefone);
+              setAtivo(ativo);
+            } else {
+              console.log('Cliente não encontrado!');
+            }
+          } else {
+            console.log(`Erro ao buscar dados do servidor. Resposta - Status: ${response.status}, Erro: ${response.error}, Mensagem: ${response.message}.`);
+          }
+        } else {
+          console.log('Sem resposta do servidor para a requisição de busca de cliente por ID!');
+        }
       })
       : cleanCliente();
   }, [idCliente, isOpen]);

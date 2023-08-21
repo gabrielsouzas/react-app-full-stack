@@ -15,9 +15,22 @@ const getAll = async (request, response) => {
 };
 
 const getById = async (request, response) => {
-    const { idcliente } = request.params;
+    /*const { idcliente } = request.params;
     const cliente = await clienteModel.getById(idcliente);
-    return response.status(200).json(cliente);
+    return response.status(200).json(cliente);*/
+
+    try {
+        const { idcliente } = request.params;
+        const cliente = await clienteModel.getById(idcliente);
+        
+        if (cliente) {
+            return response.status(200).json({cliente, status: 200, message: 'Dados buscados com sucesso'});
+        } else {
+            return response.status(404).json({ status: 404, error: 'Dados não encontrados' , message: 'Os dados solicitados não foram encontrados no banco de dados' });
+        }
+    } catch (error) {
+        return response.status(500).json({ error: 'Erro interno do servidor', message: "Erro ao buscar dados no servidor" });
+    }
 };
 
 const createCliente = async (request, response) => {

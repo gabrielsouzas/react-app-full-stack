@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import React, { useEffect, useState } from 'react';
 import propTypes from 'prop-types';
 import Loading from '../Loading/Loading';
@@ -8,8 +9,7 @@ import { formatCPFInput, formatPhoneNumberInput } from '../../utils/format';
 
 import './ClienteModal.css';
 
-function ClienteModal({isOpen, setIsOpen, idCliente, onResponse}) {
-
+function ClienteModal({ isOpen, setIsOpen, idCliente, onResponse }) {
   const [idClienteForm, setIdClienteForm] = useState(0);
   const [nome, setNome] = useState('');
   const [nomeAbreviado, setNomeAbreviado] = useState('');
@@ -18,7 +18,7 @@ function ClienteModal({isOpen, setIsOpen, idCliente, onResponse}) {
   const [ativo, setAtivo] = useState('Sim');
 
   const [loading, setLoading] = useState(false);
-  
+
   //const [cliente, setCliente] = useState([]);
 
   const cleanCliente = () => {
@@ -49,7 +49,7 @@ function ClienteModal({isOpen, setIsOpen, idCliente, onResponse}) {
       cpf,
       telefone,
       ativo,
-    }).then((response)=>{
+    }).then((response) => {
       setLoading(false);
       //response.status === 201 ? alert("Cliente inserido com sucesso!") : alert("Erro ao inserir Cliente.");
       onResponse(response);
@@ -67,7 +67,7 @@ function ClienteModal({isOpen, setIsOpen, idCliente, onResponse}) {
       cpf,
       telefone,
       ativo,
-    }).then((response)=>{
+    }).then((response) => {
       setLoading(false);
       //response.status === 204 ? alert("Cliente atualizado com sucesso!") : alert("Erro ao atualizar Cliente.");
       onResponse(response);
@@ -81,42 +81,44 @@ function ClienteModal({isOpen, setIsOpen, idCliente, onResponse}) {
     // Remove qualquer caractere que não seja dígito
     const cleanedValue = value.replace(/\D/g, '');
     // Aplica a formatação do CPF
-    const formattedValue =  formatCPFInput(cleanedValue);
+    const formattedValue = formatCPFInput(cleanedValue);
     setCPF(formattedValue);
   };
 
   const handleTelefoneChange = (e) => {
     const { value } = e.target;
     const cleanedValue = value.replace(/\D/g, '');
-    const formattedValue =  formatPhoneNumberInput(cleanedValue);
+    const formattedValue = formatPhoneNumberInput(cleanedValue);
     setTelefone(formattedValue);
   };
 
   useEffect(() => {
     idCliente
       ? fetchClienteById(idCliente).then((response) => {
-        if (response) {
-          if (response.status == 200) {
-            const { cliente } = response;
-            if (cliente.length > 0) {
-              const { idcliente, nome, nomeabreviado, cpf, telefone, ativo } = cliente[0];
-              //setCliente(data);
-              setIdClienteForm(idcliente);
-              setNome(nome);
-              setNomeAbreviado(nomeabreviado);
-              setCPF(cpf);
-              setTelefone(telefone);
-              setAtivo(ativo);
+          if (response) {
+            if (response.status == 200) {
+              const { cliente } = response;
+              if (cliente.length > 0) {
+                const { idcliente, nome, nomeabreviado, cpf, telefone, ativo } = cliente[0];
+                //setCliente(data);
+                setIdClienteForm(idcliente);
+                setNome(nome);
+                setNomeAbreviado(nomeabreviado);
+                setCPF(cpf);
+                setTelefone(telefone);
+                setAtivo(ativo);
+              } else {
+                console.log('Cliente não encontrado!');
+              }
             } else {
-              console.log('Cliente não encontrado!');
+              console.log(
+                `Erro ao buscar dados do servidor. Resposta - Status: ${response.status}, Erro: ${response.error}, Mensagem: ${response.message}.`
+              );
             }
           } else {
-            console.log(`Erro ao buscar dados do servidor. Resposta - Status: ${response.status}, Erro: ${response.error}, Mensagem: ${response.message}.`);
+            console.log('Sem resposta do servidor para a requisição de busca de cliente por ID!');
           }
-        } else {
-          console.log('Sem resposta do servidor para a requisição de busca de cliente por ID!');
-        }
-      })
+        })
       : cleanCliente();
   }, [idCliente, isOpen]);
 
@@ -200,16 +202,22 @@ function ClienteModal({isOpen, setIsOpen, idCliente, onResponse}) {
                     id="ativo"
                     name="ativo"
                     value={ativo}
-                    onChange={(e) => setAtivo(e.target.value)}>
+                    onChange={(e) => setAtivo(e.target.value)}
+                  >
                     <option value="Sim">Sim</option>
                     <option value="Não">Não</option>
                   </select>
                 </div>
               </div>
               <div className="cliente-modal-button-container">
-                {(loading && <button>Salvando <Loading /></button>) || 
-                <button type="submit">Salvar</button>}
-                <button type="button" onClick={handleCloseModal}>Cancelar</button>
+                {(loading && (
+                  <button>
+                    Salvando <Loading />
+                  </button>
+                )) || <button type="submit">Salvar</button>}
+                <button type="button" onClick={handleCloseModal}>
+                  Cancelar
+                </button>
               </div>
             </form>
           </div>
@@ -222,5 +230,5 @@ function ClienteModal({isOpen, setIsOpen, idCliente, onResponse}) {
 export default ClienteModal;
 
 ClienteModal.propTypes = {
-  data: propTypes.object
+  data: propTypes.object,
 }.isRequired;

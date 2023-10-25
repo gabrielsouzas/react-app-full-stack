@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import React, { useState, useEffect } from 'react';
 import './Cliente.css';
 
@@ -8,7 +9,6 @@ import Modal from '../Modal/Modal';
 import { fetchClientes, deleteCliente } from '../../services/clienteService';
 
 function Cliente() {
-
   const [clientes, setClientes] = useState([]);
   const [clienteModalOpen, setClienteModalOpen] = useState(false);
   const [idCliente, setIdCliente] = useState();
@@ -31,7 +31,6 @@ function Cliente() {
   const [totalPages, setTotalPages] = useState(0);
   const [currentData, setCurrentData] = useState([]);
 
-  
   const [searchTerm, setSearchTerm] = useState('');
 
   const normalizeString = (str) => {
@@ -43,8 +42,7 @@ function Cliente() {
     setSearchTerm(searchTerm);
 
     // Filtrar os dados com base no critério de pesquisa
-    const filteredData = clientes.filter(item => {
-
+    const filteredData = clientes.filter((item) => {
       // Normalizar o texto para remover acentos e caracteres especiais
       const normalizedSearchTerm = normalizeString(searchTerm.toLowerCase());
       const normalizedNome = normalizeString(item.nome.toLowerCase());
@@ -61,16 +59,15 @@ function Cliente() {
     setCurrentPage(1); // Redefinir a página atual ao pesquisar
   };
 
-
   useEffect(() => {
     const fetchClientesTable = async () => {
       try {
         const response = await fetchClientes();
-        if(response) {
-          if('error' in response) {
+        if (response) {
+          if ('error' in response) {
             console.log(response.error);
           } else {
-            if(response.status === 200 && 'clientes' in response) {
+            if (response.status === 200 && 'clientes' in response) {
               const { clientes } = response;
               setClientes(clientes);
               setTotalPages(Math.ceil(clientes.length / itemsPerPage));
@@ -81,8 +78,7 @@ function Cliente() {
           }
         } else {
           console.log('Erro: Sem resposta da requisição.');
-        }        
-        
+        }
       } catch (error) {
         console.log(error);
       }
@@ -101,7 +97,7 @@ function Cliente() {
 
   const handleClickBtnAlterar = (id) => {
     setIdCliente(id);
-    
+
     handleOpenClienteModal();
   };
 
@@ -126,21 +122,31 @@ function Cliente() {
   const handleUserChoice = (choice) => {
     // Fechamento Modal
     handleCloseModal();
-    
-    modalContent.delete && choice && deleteCliente(idCliente).then(
-      fetchClientesChanged
-    );
+
+    modalContent.delete && choice && deleteCliente(idCliente).then(fetchClientesChanged);
 
     fetchClientesChanged();
-    
   };
 
   const fetchClientesChanged = async () => {
     try {
       const response = await fetchClientes();
-      setClientes(response);
-      setTotalPages(Math.ceil(response.length / itemsPerPage));
-      setCurrentData(response.slice(startIndex, endIndex));
+      if (response) {
+        if ('error' in response) {
+          console.log(response.error);
+        } else {
+          if (response.status === 200 && 'clientes' in response) {
+            const { clientes } = response;
+            setClientes(clientes);
+            setTotalPages(Math.ceil(clientes.length / itemsPerPage));
+            setCurrentData(clientes.slice(startIndex, endIndex));
+          } else {
+            console.log('Erro: Parâmetro clientes não encontrado na requisição');
+          }
+        }
+      } else {
+        console.log('Erro: Sem resposta da requisição.');
+      }
     } catch (error) {
       console.log(error);
     }
@@ -148,11 +154,18 @@ function Cliente() {
 
   const handleResponse = (response) => {
     // Formação modal
-    const modalText = response.status === 201 ? 'Cliente inserido com sucesso!' :
-      response.status === 204 ? 'Cliente alterado com sucesso!' :
-        response.status === 200 ? 'Cliente excluído com sucesso!' :
-          response.status >= 400 && response.status < 500 ? 'Erro na solicitação do cliente! Consulte o administrador do sistema.' :
-            response.status >= 500 ? 'Erro na resposta do servidor! Consulte o administrador do sistema.' : 'Resposta desconhecida, verifique se os dados foram salvos e consulte o administrador do sistema.';
+    const modalText =
+      response.status === 201
+        ? 'Cliente inserido com sucesso!'
+        : response.status === 204
+        ? 'Cliente alterado com sucesso!'
+        : response.status === 200
+        ? 'Cliente excluído com sucesso!'
+        : response.status >= 400 && response.status < 500
+        ? 'Erro na solicitação do cliente! Consulte o administrador do sistema.'
+        : response.status >= 500
+        ? 'Erro na resposta do servidor! Consulte o administrador do sistema.'
+        : 'Resposta desconhecida, verifique se os dados foram salvos e consulte o administrador do sistema.';
     setModalContent({
       title: 'Resposta operação',
       text: modalText,
@@ -186,28 +199,25 @@ function Cliente() {
   const lastPage = () => {
     setCurrentPage(totalPages);
   };
-  
+
   return (
     <>
       <Modal
-        
         title={modalContent.title}
         text={modalContent.text}
         confirmText={modalContent.confirmText}
         cancel={modalContent.cancel}
-
         isOpen={modalOpen}
         onClose={handleCloseModal}
         onUserChoice={handleUserChoice}
       />
       <ClienteModal
-        isOpen={clienteModalOpen} 
+        isOpen={clienteModalOpen}
         setIsOpen={setClienteModalOpen}
         idCliente={idCliente}
         onResponse={handleResponse}
       />
       <div className="cliente">
-    
         <div className="cliente-title">
           <h1>Clientes </h1>
         </div>
@@ -234,8 +244,8 @@ function Cliente() {
               </tr>
             </thead>
             <tbody>
-              {
-                typeof currentData !== 'undefined' && currentData.map((value) => {
+              {typeof currentData !== 'undefined' &&
+                currentData.map((value) => {
                   return (
                     <tr key={value.idcliente}>
                       <td>{value.idcliente}</td>
@@ -245,31 +255,50 @@ function Cliente() {
                       <td>{formatPhoneNumber(value.telefone)}</td>
                       <td>{value.ativo}</td>
                       <td>
-                        <button type="button" onClick={() => {handleClickBtnAlterar(value.idcliente);}}>Alterar</button>
-                        <button type="button" onClick={() => {handleClickBtnExcluir(value.idcliente);}}>Excluir</button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            handleClickBtnAlterar(value.idcliente);
+                          }}
+                        >
+                          Alterar
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            handleClickBtnExcluir(value.idcliente);
+                          }}
+                        >
+                          Excluir
+                        </button>
                       </td>
                     </tr>
                   );
-                })
-              }
+                })}
             </tbody>
           </table>
         </div>
         <div className="cliente-pagination">
           <div className="cliente-pagination-content">
-            <button onClick={firstPage} disabled={currentPage === 1}>Primeira</button>
-            <button onClick={previousPage} disabled={currentPage === 1}>Anterior</button>
-            {currentPage !== 1 && (
-              <button onClick={previousPage}>{currentPage - 1}</button>
-            )
-            }
+            <button onClick={firstPage} disabled={currentPage === 1}>
+              Primeira
+            </button>
+            <button onClick={previousPage} disabled={currentPage === 1}>
+              Anterior
+            </button>
+            {currentPage !== 1 && <button onClick={previousPage}>{currentPage - 1}</button>}
             <button className="current-page">{currentPage}</button>
             {currentPage !== totalPages && (
-              <button className="next-button" onClick={nextPage}>{currentPage + 1}</button>
-            )
-            }
-            <button onClick={nextPage} disabled={currentPage === totalPages}>Próxima</button>
-            <button onClick={lastPage} disabled={currentPage === totalPages}>Última</button>
+              <button className="next-button" onClick={nextPage}>
+                {currentPage + 1}
+              </button>
+            )}
+            <button onClick={nextPage} disabled={currentPage === totalPages}>
+              Próxima
+            </button>
+            <button onClick={lastPage} disabled={currentPage === totalPages}>
+              Última
+            </button>
           </div>
         </div>
       </div>

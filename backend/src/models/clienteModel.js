@@ -1,8 +1,15 @@
 const connection = require('./connection');
 
 const getAll = async () => {
+  try {
     const [clientes] = await connection.execute('SELECT * FROM clientes');
     return clientes;
+  } catch (error) {
+    console.log(
+      `Erro ao tentar buscar os registros no banco de dados. Erro: ${error}`
+    );
+    return null;
+  }
 };
 
 const getById = async (idcliente) => {

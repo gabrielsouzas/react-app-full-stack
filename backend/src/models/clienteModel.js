@@ -13,9 +13,16 @@ const getAll = async () => {
 };
 
 const getById = async (idcliente) => {
-    const query = 'SELECT * FROM clientes WHERE idcliente = ?';
-    const [cliente] = await connection.execute(query, [idcliente]);
-    return cliente;
+    try {
+      const query = 'SELECT * FROM clientes WHERE idcliente = ?';
+      const [cliente] = await connection.execute(query, [idcliente]);
+      return cliente;
+    } catch (error) {
+      console.log(
+        `Erro ao tentar buscar o registro no banco de dados. Erro: ${error}`
+      );
+      return null;
+    }
 };
 
 const createCliente = async (cliente) => {

@@ -33,10 +33,6 @@ const getAll = async (request, response) => {
 };
 
 const getById = async (request, response) => {
-    /*const { idcliente } = request.params;
-    const cliente = await clienteModel.getById(idcliente);
-    return response.status(200).json(cliente);*/
-
     try {
         const { idcliente } = request.params;
         const cliente = await clienteModel.getById(idcliente);
@@ -70,11 +66,6 @@ const getById = async (request, response) => {
 };
 
 const createCliente = async (request, response) => {
-    // Executa o método createCliente do Model passando o body
-    /* const createdCliente = await clienteModel.createCliente(request.body);
-    // Retorna um json de resposta da operação de inserção
-    return response.status(201).json(createdCliente); */
-
     try {
         const createdCliente = await clienteModel.createCliente(request.body);
 
